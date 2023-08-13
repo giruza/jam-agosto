@@ -9,5 +9,5 @@ public class TileData : ScriptableObject
 {
     public TileBase[] tiles;
 
-    public float transitable;
+    public bool transitable;
 }

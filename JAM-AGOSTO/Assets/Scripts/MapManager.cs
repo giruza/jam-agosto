@@ -7,11 +7,9 @@ public class MapManager : MonoBehaviour
 {
     public Tilemap tilemap;
     public List<TileData> tileDatas;
-    private Dictionary<TileBase,TileData> dataFromTiles;
-
-    public Vector3Int location;
-
-    public TileBase clickedTile;
+    public Dictionary<TileBase,TileData> dataFromTiles;
+    //public Vector3Int location;
+    //public TileBase clickedTile;
 
 
 
@@ -32,12 +30,21 @@ public class MapManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        /*if (Input.GetMouseButtonDown(0))
         {
             Vector3 mp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             location = tilemap.WorldToCell(mp);
             clickedTile = tilemap.GetTile(location);
             Debug.Log("Pos: " + location + " / " + "transitable: " + dataFromTiles[clickedTile].transitable);
-        }
+            Debug.Log("CellToWorld" + tilemap.CellToLocal(location));
+        }*/
+    }
+
+    public bool isCellTransitable(Vector3Int coords){
+        return dataFromTiles[tilemap.GetTile(coords)].transitable;
+    }
+
+    public Vector3Int cellToLocal(Vector3Int coords){
+        return Vector3Int.FloorToInt(tilemap.CellToLocal(coords));
     }
 }

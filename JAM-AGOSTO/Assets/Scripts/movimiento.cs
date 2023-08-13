@@ -1,13 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class movimiento : MonoBehaviour
 {
+    public Vector3Int coords;
+    public MapManager mapManager;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        move(Vector3Int.zero);
     }
 
     // Update is called once per frame
@@ -15,19 +21,35 @@ public class movimiento : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            transform.position += Vector3.left; ;
+            move(Vector3Int.left);
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
-            transform.position += Vector3.right;
+            move(Vector3Int.right);
         }
         if (Input.GetKeyDown(KeyCode.W))
         {
-            transform.position += Vector3.up;
+            move(Vector3Int.up);
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            transform.position += Vector3.down;
+            move(Vector3Int.down);
         }
     }
+
+    void move(Vector3Int direction){
+        if (checkMove(coords+direction)){
+            coords += direction;
+            transform.position = mapManager.cellToLocal(coords);
+            Debug.Log("Movimiento a: " + coords);
+        } else {
+            Debug.Log("No pasarás");
+        }
+    }
+
+    bool checkMove(Vector3Int newCoords){
+        return mapManager.isCellTransitable(newCoords);
+    }
 }
+
+
