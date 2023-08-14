@@ -35,7 +35,6 @@ public class MapManager : MonoBehaviour
             Vector3 mp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             location = tilemap.WorldToCell(mp);
             clickedTile = tilemap.GetTile(location);
-            Debug.Log("Pos: " + location + " / " + "transitable: " + dataFromTiles[clickedTile].transitable);
             Debug.Log("CellToWorld" + tilemap.CellToLocal(location));
         }*/
     }
