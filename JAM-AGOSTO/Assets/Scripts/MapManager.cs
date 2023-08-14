@@ -41,10 +41,26 @@ public class MapManager : MonoBehaviour
     }
 
     public bool isCellTransitable(Vector3Int coords){
-        return dataFromTiles[tilemap.GetTile(coords)].transitable;
+        bool cellTransitable = true;
+        foreach (TileBase tile in getTilesInDepth(coords)){
+            if (tile != null){
+                if(dataFromTiles[tile].transitable == false)
+                    cellTransitable = false;
+            }
+        }
+        return cellTransitable;
     }
 
     public Vector3Int cellToLocal(Vector3Int coords){
         return Vector3Int.FloorToInt(tilemap.CellToLocal(coords));
+    }
+
+    public TileBase[] getTilesInDepth(Vector3Int coords){
+        int depth = 3;
+        TileBase[] tileBases = new TileBase[depth];
+        for(var i = 0; i < depth; i++){
+            tileBases[i] = tilemap.GetTile(coords + i*Vector3Int.back);
+        }
+        return tileBases;
     }
 }
