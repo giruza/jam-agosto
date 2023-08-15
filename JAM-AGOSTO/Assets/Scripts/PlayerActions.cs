@@ -43,23 +43,31 @@ public class PlayerActions : MonoBehaviour
         if(actionManager.IsPlayerTurn() && (Input.inputString != "") /*Input.anyKey*/){
             //Actions();
             switch(Input.inputString.ToUpper()){
-                case "A":
-                    actionManager.playerStarting();
-                    StartCoroutine(move(Vector3Int.left));
-                    flip("left");
+                case "A": 
+                    if (mapManager.isCellTransitable(coords+Vector3Int.left)){
+                        actionManager.playerStarting();
+                        StartCoroutine(move(Vector3Int.left));
+                        flip("left");
+                    }
                     break;
                 case "D":
-                    actionManager.playerStarting();
-                    StartCoroutine(move(Vector3Int.right));
-                    flip("right");
+                    if (mapManager.isCellTransitable(coords+Vector3Int.right)){
+                        actionManager.playerStarting();
+                        StartCoroutine(move(Vector3Int.right));
+                        flip("right");
+                    }
                     break;
                 case "W":
-                    actionManager.playerStarting();
-                    StartCoroutine(move(Vector3Int.up));
+                    if (mapManager.isCellTransitable(coords+Vector3Int.up)){
+                        actionManager.playerStarting();
+                        StartCoroutine(move(Vector3Int.up));
+                    }
                     break;
                 case "S":
-                    actionManager.playerStarting();
-                    StartCoroutine(move(Vector3Int.down));
+                    if (mapManager.isCellTransitable(coords+Vector3Int.down)){
+                        actionManager.playerStarting();
+                        StartCoroutine(move(Vector3Int.down));
+                    }
                     break;
                 default:
                     break;

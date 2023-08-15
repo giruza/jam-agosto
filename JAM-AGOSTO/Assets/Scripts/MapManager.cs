@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -31,20 +32,22 @@ public class MapManager : MonoBehaviour
     {
         mainCamera.enabled = true;
         followCamera.enabled = false;
-
-        /*foreach (TileBase tile in foremap.GetTilesBlock(new BoundsInt(-100,100,-100,100,0,0))){
-            Debug.Log(tile);
-        }*/
+        foreach (var pos in foremap.cellBounds.allPositionsWithin){
+            Vector3Int location = new Vector3Int(pos.x, pos.y, 0);
+            if (foremap.HasTile(location)){
+                foremap.SetTileFlags(location, TileFlags.None);
+            }
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        /*if (Input.GetKeyDown(KeyCode.C)) {
+        OccupiedCellsInForemap();
+        if (Input.GetKeyDown(KeyCode.C)) {
             mainCamera.enabled = !mainCamera.enabled;
             followCamera.enabled = !followCamera.enabled;
-        }*/
+        }
 
         
 
@@ -89,4 +92,23 @@ public class MapManager : MonoBehaviour
         occupiedTiles.Remove(location);
     }
     
+    public void OccupiedCellsInForemap(){
+        foreach (var pos in foremap.cellBounds.allPositionsWithin){
+            Vector3Int location = new Vector3Int(pos.x, pos.y, 0);
+            if (foremap.HasTile(location)){
+                //Debug.Log(foremap.GetTile(location));
+                if (occupiedTiles.Contains(location) || occupiedTiles.Contains(location + Vector3Int.down)|| occupiedTiles.Contains(location + Vector3Int.up)
+                || occupiedTiles.Contains(location + Vector3Int.right)|| occupiedTiles.Contains(location + Vector3Int.left)
+                || occupiedTiles.Contains(location + Vector3Int.right + Vector3Int.down)|| occupiedTiles.Contains(location + Vector3Int.left + Vector3Int.down)
+                || occupiedTiles.Contains(location + Vector3Int.right + Vector3Int.up)|| occupiedTiles.Contains(location + Vector3Int.left + Vector3Int.up)
+                ){
+                    foremap.SetColor(location, new Color(1f, 1f, 1f, 0.5f));
+                } else{
+                    foremap.SetColor(location, Color.white);
+                }
+                
+            }
+        }
+    }
+
 }
