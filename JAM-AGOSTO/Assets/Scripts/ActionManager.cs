@@ -5,6 +5,7 @@ using UnityEngine;
 public class ActionManager : MonoBehaviour
 {
     public List<GameObject> enemyList = new List<GameObject>();
+    public GameObject player;
     public int turnStatus;
 
     void Awake(){
@@ -28,7 +29,9 @@ public class ActionManager : MonoBehaviour
         EnemiesStarting();
         foreach (GameObject enemy in enemyList){
             enemy.GetComponent<EnemyController>().Action();
+            changeColor(enemy, Color.red);
             yield return new WaitForSeconds(1.0f);
+            changeColor(enemy, Color.white);
         }
         EnemiesDone();
 
@@ -55,10 +58,12 @@ public class ActionManager : MonoBehaviour
 
     public void playerStarting(){
         turnStatus = 1;
+        changeColor(player, Color.green);
     }
 
     public void playerDone(){
         turnStatus = 2;
+        changeColor(player, Color.white);
     }
 
     public void EnemiesStarting(){
@@ -69,5 +74,8 @@ public class ActionManager : MonoBehaviour
         turnStatus = 0;
     }
 
+    public void changeColor(GameObject objectColored, Color coloringColor){
+        objectColored.GetComponent<Renderer>().material.color = coloringColor;
+    }
 
 }

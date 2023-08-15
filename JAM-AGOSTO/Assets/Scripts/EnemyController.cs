@@ -46,9 +46,5 @@ public class EnemyController : MonoBehaviour
         return true;
     }
 
-    IEnumerator Waiting(float seconds) {
-        yield return new WaitForSeconds(seconds);
-        print(Time.time);
-    }
 
 }

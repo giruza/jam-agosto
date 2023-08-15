@@ -14,7 +14,7 @@ public class PlayerActions : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        move(Vector3Int.zero);
+        transform.position = mapManager.cellToLocal(coords);
     }
 
     // Update is called once per frame
