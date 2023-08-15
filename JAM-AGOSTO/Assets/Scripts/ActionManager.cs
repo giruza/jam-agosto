@@ -30,7 +30,7 @@ public class ActionManager : MonoBehaviour
         foreach (GameObject enemy in enemyList){
             enemy.GetComponent<EnemyController>().Action();
             changeColor(enemy, Color.red);
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(0.1f);
             changeColor(enemy, Color.white);
         }
         EnemiesDone();

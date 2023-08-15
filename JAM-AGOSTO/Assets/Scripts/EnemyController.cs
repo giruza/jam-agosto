@@ -42,7 +42,7 @@ public class EnemyController : MonoBehaviour
     }
 
     public bool Action(){
-        Debug.Log(this.name + " actua");
+        Debug.Log(this.name + ": AAAARGH!");
         return true;
     }
 

@@ -3360,7 +3360,7 @@ PrefabInstance:
       objectReference: {fileID: 2056984430}
     - target: {fileID: 7299778377328225240, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
       propertyPath: m_Name
-      value: Vandrol (1)
+      value: Vandrilo
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3398,9 +3398,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilemap: {fileID: 501703174}
+  foremap: {fileID: 1277514369}
   tileDatas:
   - {fileID: 11400000, guid: 2c80e5e5341f15040b3c33e51fef9311, type: 2}
   - {fileID: 11400000, guid: bc1476ff8e0ae3740a3d418b11ef76f3, type: 2}
+  occupiedTiles: []
   mainCamera: {fileID: 963194227}
   followCamera: {fileID: 752995935}
 --- !u!4 &2056984429
@@ -3431,6 +3433,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyList: []
+  player: {fileID: 1968790544}
   turnStatus: 0
 --- !u!1001 &3859820686380870728
 PrefabInstance:

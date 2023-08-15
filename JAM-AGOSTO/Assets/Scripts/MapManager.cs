@@ -6,8 +6,10 @@ using UnityEngine.Tilemaps;
 public class MapManager : MonoBehaviour
 {
     public Tilemap tilemap;
+    public Tilemap foremap;
     public List<TileData> tileDatas;
     public Dictionary<TileBase,TileData> dataFromTiles;
+    public List<Vector3Int> occupiedTiles = new List<Vector3Int>();
     //public Vector3Int location;
     //public TileBase clickedTile;
 
@@ -29,16 +31,23 @@ public class MapManager : MonoBehaviour
     {
         mainCamera.enabled = true;
         followCamera.enabled = false;
+
+        /*foreach (TileBase tile in foremap.GetTilesBlock(new BoundsInt(-100,100,-100,100,0,0))){
+            Debug.Log(tile);
+        }*/
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.C)) {
+        /*if (Input.GetKeyDown(KeyCode.C)) {
             mainCamera.enabled = !mainCamera.enabled;
             followCamera.enabled = !followCamera.enabled;
-        }
+        }*/
+
+        
+
         /*if (Input.GetMouseButtonDown(0))
         {
             Vector3 mp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -71,4 +80,13 @@ public class MapManager : MonoBehaviour
         }
         return tileBases;
     }
+
+    public void AddOccupiedTile(Vector3Int location){
+        occupiedTiles.Add(location);
+    }
+
+    public void RemoveOccupiedTile(Vector3Int location){
+        occupiedTiles.Remove(location);
+    }
+    
 }
