@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class movimiento : MonoBehaviour
+public class PlayerActions : MonoBehaviour
 {
     public Vector3Int coords;
     public MapManager mapManager;
+    public ActionManager actionManager;
 
 
 
@@ -19,36 +20,44 @@ public class movimiento : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(actionManager.IsPlayerTurn()){
+            Action();
+        }
+        
+    }
+
+    void Action(){
         if (Input.GetKeyDown(KeyCode.A))
         {
-            move(Vector3Int.left);
+            StartCoroutine(move(Vector3Int.left));
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
-            move(Vector3Int.right);
+            StartCoroutine(move(Vector3Int.right));
         }
         if (Input.GetKeyDown(KeyCode.W))
         {
-            move(Vector3Int.up);
+            StartCoroutine(move(Vector3Int.up));
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            move(Vector3Int.down);
+            StartCoroutine(move(Vector3Int.down));
         }
     }
 
-    void move(Vector3Int direction){
-        if (checkMove(coords+direction)){
+
+    IEnumerator move(Vector3Int direction){
+        if (mapManager.isCellTransitable(coords+direction)){
+            actionManager.playerStarting();
             coords += direction;
             transform.position = mapManager.cellToLocal(coords);
             Debug.Log("Movimiento a: " + coords);
+            yield return new WaitForSeconds(1.0f);
+            actionManager.playerDone();
+
         } else {
             Debug.Log("No pasarás");
         }
-    }
-
-    bool checkMove(Vector3Int newCoords){
-        return mapManager.isCellTransitable(newCoords);
     }
 }
 

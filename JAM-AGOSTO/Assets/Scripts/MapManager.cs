@@ -11,6 +11,9 @@ public class MapManager : MonoBehaviour
     //public Vector3Int location;
     //public TileBase clickedTile;
 
+    public Camera mainCamera;
+    public Camera followCamera;
+
 
 
     private void Awake(){
@@ -24,12 +27,18 @@ public class MapManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        mainCamera.enabled = true;
+        followCamera.enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.C)) {
+            mainCamera.enabled = !mainCamera.enabled;
+            followCamera.enabled = !followCamera.enabled;
+        }
         /*if (Input.GetMouseButtonDown(0))
         {
             Vector3 mp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
