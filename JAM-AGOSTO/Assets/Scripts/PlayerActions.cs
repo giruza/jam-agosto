@@ -73,7 +73,12 @@ public class PlayerActions : MonoBehaviour
                     break;
             }
         }
-        
+        /*else{
+            if(actionManager.IsPlayerTurn()){
+                actionManager.playerStarting();
+                StartCoroutine(move(Vector3Int.zero));
+            }
+        }*/
     }
 
 /*
@@ -99,18 +104,13 @@ public class PlayerActions : MonoBehaviour
 */
 
     IEnumerator move(Vector3Int direction){
-        if (mapManager.isCellTransitable(coords+direction)){
-            mapManager.RemoveOccupiedTile(coords);
-            coords += direction;
-            transform.position = mapManager.cellToLocal(coords);
-            mapManager.AddOccupiedTile(coords);
-            Debug.Log("Movimiento a: " + coords);
-            yield return new WaitForSeconds(0.5f);
-            actionManager.playerDone();
-
-        } else {
-            Debug.Log("No pasarás");
-        }
+        mapManager.RemoveOccupiedTile(coords);
+        coords += direction;
+        transform.position = mapManager.cellToLocal(coords);
+        mapManager.AddOccupiedTile(coords);
+        Debug.Log("Movimiento a: " + coords);
+        yield return new WaitForSeconds(0.1f);
+        actionManager.playerDone();
     }
 
     public void flip(string direction){

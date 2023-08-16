@@ -30,8 +30,8 @@ public class MapManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        mainCamera.enabled = true;
-        followCamera.enabled = false;
+        mainCamera.enabled = false;
+        followCamera.enabled = true;
         foreach (var pos in foremap.cellBounds.allPositionsWithin){
             Vector3Int location = new Vector3Int(pos.x, pos.y, 0);
             if (foremap.HasTile(location)){
@@ -62,6 +62,9 @@ public class MapManager : MonoBehaviour
 
     public bool isCellTransitable(Vector3Int coords){
         bool cellTransitable = true;
+        if(occupiedTiles.Contains(coords)){
+            return false;
+        }
         foreach (TileBase tile in getTilesInDepth(coords)){
             if (tile != null){
                 if(dataFromTiles[tile].transitable == false)
@@ -97,12 +100,12 @@ public class MapManager : MonoBehaviour
             Vector3Int location = new Vector3Int(pos.x, pos.y, 0);
             if (foremap.HasTile(location)){
                 //Debug.Log(foremap.GetTile(location));
-                if (occupiedTiles.Contains(location) || occupiedTiles.Contains(location + Vector3Int.down)|| occupiedTiles.Contains(location + Vector3Int.up)
-                || occupiedTiles.Contains(location + Vector3Int.right)|| occupiedTiles.Contains(location + Vector3Int.left)
-                || occupiedTiles.Contains(location + Vector3Int.right + Vector3Int.down)|| occupiedTiles.Contains(location + Vector3Int.left + Vector3Int.down)
-                || occupiedTiles.Contains(location + Vector3Int.right + Vector3Int.up)|| occupiedTiles.Contains(location + Vector3Int.left + Vector3Int.up)
+                if (occupiedTiles.Contains(location) || occupiedTiles.Contains(location + Vector3Int.down)/*|| occupiedTiles.Contains(location + Vector3Int.up)*/
+                //|| occupiedTiles.Contains(location + Vector3Int.right)|| occupiedTiles.Contains(location + Vector3Int.left)
+                //|| occupiedTiles.Contains(location + Vector3Int.right + Vector3Int.down)|| occupiedTiles.Contains(location + Vector3Int.left + Vector3Int.down)
+                /*|| occupiedTiles.Contains(location + Vector3Int.right + Vector3Int.up)|| occupiedTiles.Contains(location + Vector3Int.left + Vector3Int.up)*/
                 ){
-                    foremap.SetColor(location, new Color(1f, 1f, 1f, 0.5f));
+                    foremap.SetColor(location, new Color(1f, 1f, 1f, 0.7f));
                 } else{
                     foremap.SetColor(location, Color.white);
                 }
