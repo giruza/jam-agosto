@@ -69,6 +69,9 @@ public class PlayerActions : MonoBehaviour
                         StartCoroutine(move(Vector3Int.down));
                     }
                     break;
+                case "E":
+                    mapManager.GetInteractuableInRange(coords, 1);
+                    break;
                 default:
                     break;
             }

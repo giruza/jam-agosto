@@ -11,6 +11,7 @@ public class MapManager : MonoBehaviour
     public List<TileData> tileDatas;
     public Dictionary<TileBase,TileData> dataFromTiles;
     public List<Vector3Int> occupiedTiles = new();
+    public Dictionary<GameObject, Vector3Int> interactuables = new();
     public TileBase mouseTile; 
     public float percentageAlpha;
     //public Vector3Int location;
@@ -60,6 +61,22 @@ public class MapManager : MonoBehaviour
             clickedTile = tilemap.GetTile(location);
             Debug.Log("CellToWorld" + tilemap.CellToLocal(location));
         }*/
+    }
+
+    public void AddInteractuable(GameObject enemy, Vector3Int Coords){
+        interactuables.Add(enemy,Coords);
+        //interactuableList.Add(enemy);
+    }
+
+    public bool GetInteractuableInRange(Vector3Int coords, int range){
+        foreach(KeyValuePair<GameObject, Vector3Int> entry in interactuables){
+            if (range >= Mathf.Abs(entry.Value.x - coords.x) + Mathf.Abs(entry.Value.y - coords.y)){
+                //Debug.Log(entry.Key + " / " + entry.Value);
+                entry.Key.GetComponent<Interactuable>().Use();
+                return true;
+            }
+        }
+        return false;
     }
 
     public bool isCellTransitable(Vector3Int coords){

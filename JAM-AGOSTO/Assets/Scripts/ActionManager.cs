@@ -40,6 +40,8 @@ public class ActionManager : MonoBehaviour
         enemyList.Add(enemy);
     }
 
+    
+
     public bool IsPlayerTurn(){
         if (turnStatus == 0){
             return true;
