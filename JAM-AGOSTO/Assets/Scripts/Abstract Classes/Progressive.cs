@@ -4,6 +4,7 @@ using UnityEngine;
 public abstract class Progresive : MonoBehaviour 
 {
     [SerializeField] private float _initial;
+    [SerializeField] private float _maxValue;
     private float _current;
 
     public float Current
@@ -21,6 +22,20 @@ public abstract class Progresive : MonoBehaviour
     }
 
     public float Initial => _initial;
+
+    public float MaxValue 
+    {
+        get
+        {
+            return _maxValue;
+        }
+
+        set
+        {
+            _maxValue = value;
+            OnChange?.Invoke();
+        }
+    }
     public float Ratio => _current / _initial;
     public Action OnChange;
 

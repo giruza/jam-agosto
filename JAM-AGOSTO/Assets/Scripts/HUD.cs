@@ -1,29 +1,35 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.UI;
 
-public class HUD : Progresive, IDamageable
+public class HUD : MonoBehaviour
 {
-    [SerializeField] private UnityEvent OnDie;
+    [SerializeField] private Health _health;
+    [SerializeField] private Mana _mana;
+    [SerializeField] private Resources _resources;
+    [SerializeField] private Slider _healthFillImage;
+    [SerializeField] private Slider _manaFillImage;
+    [SerializeField] private TextMeshProUGUI resourcesText;
 
-    public void Damage(float amount)
+    private void OnEnable() 
     {
-        Current -= amount;
-
-        if (Current <= 0)
-        {
-            OnDie.Invoke();
-        }
+        _health.OnChange += UpdateBar;
+        _mana.OnChange += UpdateBar;
+        _resources.OnChange += UpdateBar;
     }
-
-    public void Heal(float amount)
+    private void OnDisable() 
     {
-        Current += amount;
+        _health.OnChange -= UpdateBar;
+        _mana.OnChange -= UpdateBar;
+        _resources.OnChange -= UpdateBar;
+    } 
 
-        if(Current > Initial) 
-            Current = Initial;
+    private void UpdateBar() 
+    {
+        _healthFillImage.value = _health.Ratio;
+        _manaFillImage.value = _mana.Ratio;
+        resourcesText.text = _resources.Current.ToString();
     }
 }
