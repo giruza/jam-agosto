@@ -10,7 +10,9 @@ public class MapManager : MonoBehaviour
     public Tilemap foremap;
     public List<TileData> tileDatas;
     public Dictionary<TileBase,TileData> dataFromTiles;
-    public List<Vector3Int> occupiedTiles = new List<Vector3Int>();
+    public List<Vector3Int> occupiedTiles = new();
+    public TileBase mouseTile; 
+    public float percentageAlpha;
     //public Vector3Int location;
     //public TileBase clickedTile;
 
@@ -105,7 +107,7 @@ public class MapManager : MonoBehaviour
                 //|| occupiedTiles.Contains(location + Vector3Int.right + Vector3Int.down)|| occupiedTiles.Contains(location + Vector3Int.left + Vector3Int.down)
                 /*|| occupiedTiles.Contains(location + Vector3Int.right + Vector3Int.up)|| occupiedTiles.Contains(location + Vector3Int.left + Vector3Int.up)*/
                 ){
-                    foremap.SetColor(location, new Color(1f, 1f, 1f, 0.7f));
+                    foremap.SetColor(location, new Color(1f, 1f, 1f, percentageAlpha));
                 } else{
                     foremap.SetColor(location, Color.white);
                 }
