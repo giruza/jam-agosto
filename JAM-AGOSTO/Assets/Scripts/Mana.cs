@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mana : Progresive, IDamageable
+public class Mana : Progresive, IDamageable, IHealable
 {
     public void Damage(float amount) 
     {
@@ -14,11 +14,11 @@ public class Mana : Progresive, IDamageable
         }
     }
 
-    public void Regenerate(float amount)
+    public void Heal(float amount)
     {
         Current += amount;
 
-        if (Current > Initial)
-            Current = Initial;
+        if (Current > MaxValue)
+            Current = MaxValue;
     }
 }

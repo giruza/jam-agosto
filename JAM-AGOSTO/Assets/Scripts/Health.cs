@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Health : Progresive, IDamageable
+public class Health : Progresive, IDamageable, IHealable
 {
     [SerializeField] private UnityEvent OnDie;
 
@@ -23,7 +23,7 @@ public class Health : Progresive, IDamageable
     {
         Current += amount;
 
-        if(Current > Initial) 
-            Current = Initial;
+        if(Current > MaxValue) 
+            Current = MaxValue;
     }
 }

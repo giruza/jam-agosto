@@ -36,7 +36,7 @@ public abstract class Progresive : MonoBehaviour
             OnChange?.Invoke();
         }
     }
-    public float Ratio => _current / _initial;
+    public float Ratio => _current / _maxValue;
     public Action OnChange;
 
     private void Awake() => _current = _initial;
