@@ -17,66 +17,78 @@ public class PruebaEnemy : Damager
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) 
-        {
-            print(ClaraMaria.GetComponent<Health>().Current);
-            ApplyDamage(ClaraMaria.GetComponent<Health>());
-        }
 
-        if (Input.GetKeyDown(KeyCode.M))
+        /* Añado esta condicion para que solo tenga en cuenta los controles fuera del menu de pausa, aunque habra que actualizarlo con otro tipo de controles.
+        Por ejemplo, que fuera del menu el personaja se mueva, pero que dentro navegue entre los posibles botones. De todas formas de momento lo dejo asi y ya
+        lo actualizaremos cuando tengamos el movimiento y todo hecho */
+        if (PauseMenu.gameIsPaused == false)
         {
-            print(ClaraMaria.GetComponent<Health>().Current);
-            ApplyHeal(ClaraMaria.GetComponent<Health>());
-        }
 
-            if (Input.GetKeyDown(KeyCode.C)) 
-        {
-            print(ClaraMaria.GetComponent<Mana>().Current);
-            ApplyDamage(ClaraMaria.GetComponent<Mana>());
-        }
-
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            print(ClaraMaria.GetComponent<Mana>().Current);
-            ApplyHeal(ClaraMaria.GetComponent<Mana>());
-        }
-
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            print(ClaraMaria.GetComponent<Resources>().Current);
-            ApplyHeal(ClaraMaria.GetComponent<Resources>());
-        }
-
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            print(ClaraMaria.GetComponent<Resources>().Current);
-            ApplyDamage(ClaraMaria.GetComponent<Resources>());
-        }
-
-        if (Input.anyKeyDown) 
-        {
-            var input = Input.inputString;
-            //print(input);
-            switch (input) 
+            if (Input.GetKeyDown(KeyCode.Space)) 
             {
-                case "1":
-                    //Usar objeto 01
-                    print(input);
-                    _hud.UseObject(_object01, 0);
-                    break;
-                case "2":
-                    //Usar objeto 02
-                    _hud.UseObject(_object02, 1);
-                    break;
-                case "3":
-                    //Usar objeto 03
-                    _hud.UseObject(_object03, 2);
-                    break;
-                case "4":
-                    //Usar objeto 04
-                    _hud.UseObject(_object04, 3);
-                    break;
+                print(ClaraMaria.GetComponent<Health>().Current);
+                ApplyDamage(ClaraMaria.GetComponent<Health>());
             }
+
+            if (Input.GetKeyDown(KeyCode.M))
+            {
+                print(ClaraMaria.GetComponent<Health>().Current);
+                ApplyHeal(ClaraMaria.GetComponent<Health>());
+            }
+
+                if (Input.GetKeyDown(KeyCode.C)) 
+            {
+                print(ClaraMaria.GetComponent<Mana>().Current);
+                ApplyDamage(ClaraMaria.GetComponent<Mana>());
+            }
+
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                print(ClaraMaria.GetComponent<Mana>().Current);
+                ApplyHeal(ClaraMaria.GetComponent<Mana>());
+            }
+
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                print(ClaraMaria.GetComponent<Resources>().Current);
+                ApplyHeal(ClaraMaria.GetComponent<Resources>());
+            }
+
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                print(ClaraMaria.GetComponent<Resources>().Current);
+                ApplyDamage(ClaraMaria.GetComponent<Resources>());
+            }
+
+            if (Input.anyKeyDown) 
+            {
+                var input = Input.inputString;
+                //print(input);
+                switch (input) 
+                {
+                    case "1":
+                        //Usar objeto 01
+                        print(input);
+                        _hud.UseObject(_object01, 0);
+                        break;
+                    case "2":
+                        //Usar objeto 02
+                        _hud.UseObject(_object02, 1);
+                        break;
+                    case "3":
+                        //Usar objeto 03
+                        _hud.UseObject(_object03, 2);
+                        break;
+                    case "4":
+                        //Usar objeto 04
+                        _hud.UseObject(_object04, 3);
+                        break;
+                }
+
+            }
+
         }
+
     }
+
 }
