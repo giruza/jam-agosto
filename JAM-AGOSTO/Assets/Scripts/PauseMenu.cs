@@ -34,6 +34,9 @@ public class PauseMenu : MonoBehaviour
     // Activamos la pantalla de menú, el juego se congela (su velocidad pasa a 0) y ponemos el flag a true, que posteriormente comprobaremos en métodos como PruebaEnemy.cs
     void PauseFunction()
     {
+        //InventoryManager inventoryManager = GetComponent<InventoryManager>();   // Creamos una instancia de InventoryManager para poder acceder desde este metodo, que es estático
+        //inventoryManager.ListItems();    // Llamamos a la funcion de InventoryManager.cs
+
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         gameIsPaused = true;
