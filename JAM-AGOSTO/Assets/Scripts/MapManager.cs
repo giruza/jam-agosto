@@ -1,15 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class MapManager : MonoBehaviour
 {
     public Tilemap tilemap;
+    public Tilemap foremap;
     public List<TileData> tileDatas;
     public Dictionary<TileBase,TileData> dataFromTiles;
+    public List<Vector3Int> occupiedTiles = new();
+    public Dictionary<GameObject, Vector3Int> interactuables = new();
+    public TileBase mouseTile; 
+    public float percentageAlpha;
     //public Vector3Int location;
     //public TileBase clickedTile;
+
+    public Camera mainCamera;
+    public Camera followCamera;
 
 
 
@@ -24,24 +33,57 @@ public class MapManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        mainCamera.enabled = false;
+        followCamera.enabled = true;
+        foreach (var pos in foremap.cellBounds.allPositionsWithin){
+            Vector3Int location = new Vector3Int(pos.x, pos.y, 0);
+            if (foremap.HasTile(location)){
+                foremap.SetTileFlags(location, TileFlags.None);
+            }
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        OccupiedCellsInForemap();
+        if (Input.GetKeyDown(KeyCode.C)) {
+            mainCamera.enabled = !mainCamera.enabled;
+            followCamera.enabled = !followCamera.enabled;
+        }
+
+        
+
         /*if (Input.GetMouseButtonDown(0))
         {
             Vector3 mp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             location = tilemap.WorldToCell(mp);
             clickedTile = tilemap.GetTile(location);
-            Debug.Log("Pos: " + location + " / " + "transitable: " + dataFromTiles[clickedTile].transitable);
             Debug.Log("CellToWorld" + tilemap.CellToLocal(location));
         }*/
     }
 
+    public void AddInteractuable(GameObject enemy, Vector3Int Coords){
+        interactuables.Add(enemy,Coords);
+        //interactuableList.Add(enemy);
+    }
+
+    public bool GetInteractuableInRange(Vector3Int coords, int range){
+        foreach(KeyValuePair<GameObject, Vector3Int> entry in interactuables){
+            if (range >= Mathf.Abs(entry.Value.x - coords.x) + Mathf.Abs(entry.Value.y - coords.y)){
+                //Debug.Log(entry.Key + " / " + entry.Value);
+                entry.Key.GetComponent<Interactuable>().Use();
+                return true;
+            }
+        }
+        return false;
+    }
+
     public bool isCellTransitable(Vector3Int coords){
         bool cellTransitable = true;
+        if(occupiedTiles.Contains(coords)){
+            return false;
+        }
         foreach (TileBase tile in getTilesInDepth(coords)){
             if (tile != null){
                 if(dataFromTiles[tile].transitable == false)
@@ -63,4 +105,32 @@ public class MapManager : MonoBehaviour
         }
         return tileBases;
     }
+
+    public void AddOccupiedTile(Vector3Int location){
+        occupiedTiles.Add(location);
+    }
+
+    public void RemoveOccupiedTile(Vector3Int location){
+        occupiedTiles.Remove(location);
+    }
+    
+    public void OccupiedCellsInForemap(){
+        foreach (var pos in foremap.cellBounds.allPositionsWithin){
+            Vector3Int location = new Vector3Int(pos.x, pos.y, 0);
+            if (foremap.HasTile(location)){
+                //Debug.Log(foremap.GetTile(location));
+                if (occupiedTiles.Contains(location) || occupiedTiles.Contains(location + Vector3Int.down)/*|| occupiedTiles.Contains(location + Vector3Int.up)*/
+                //|| occupiedTiles.Contains(location + Vector3Int.right)|| occupiedTiles.Contains(location + Vector3Int.left)
+                //|| occupiedTiles.Contains(location + Vector3Int.right + Vector3Int.down)|| occupiedTiles.Contains(location + Vector3Int.left + Vector3Int.down)
+                /*|| occupiedTiles.Contains(location + Vector3Int.right + Vector3Int.up)|| occupiedTiles.Contains(location + Vector3Int.left + Vector3Int.up)*/
+                ){
+                    foremap.SetColor(location, new Color(1f, 1f, 1f, percentageAlpha));
+                } else{
+                    foremap.SetColor(location, Color.white);
+                }
+                
+            }
+        }
+    }
+
 }
