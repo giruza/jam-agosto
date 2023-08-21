@@ -7,7 +7,7 @@ public class movimiento : MonoBehaviour
 {
     public Vector3Int coords;
     public MapManager mapManager;
-
+    public InteractuableList interactuableList;
 
 
     // Start is called before the first frame update
@@ -19,6 +19,12 @@ public class movimiento : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            checkInteraction();
+        }
+        
+
         if (Input.GetKeyDown(KeyCode.A))
         {
             move(Vector3Int.left);
@@ -36,7 +42,6 @@ public class movimiento : MonoBehaviour
             move(Vector3Int.down);
         }
     }
-
     void move(Vector3Int direction){
         if (checkMove(coords+direction)){
             coords += direction;
@@ -49,6 +54,14 @@ public class movimiento : MonoBehaviour
 
     bool checkMove(Vector3Int newCoords){
         return mapManager.isCellTransitable(newCoords);
+    }
+
+    void checkInteraction()
+    {
+        foreach(GameObject semen in interactuableList.GetListItem())
+        {
+            Debug.Log(semen);
+        }
     }
 }
 
