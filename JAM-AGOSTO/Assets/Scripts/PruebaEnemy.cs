@@ -15,6 +15,10 @@ public class PruebaEnemy : Damager
 
     [SerializeField] private HUD _hud;
 
+    public Item potion;
+    public Item superPotion;
+    public Item fullHeal;
+
     private void Update()
     {
 
@@ -60,6 +64,21 @@ public class PruebaEnemy : Damager
                 ApplyDamage(ClaraMaria.GetComponent<Resources>());
             }
 
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                BuyItem(potion);
+            }
+
+            if (Input.GetKeyDown(KeyCode.O))
+            {
+                BuyItem(superPotion);
+            }
+
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                BuyItem(fullHeal);
+            }
+
             if (Input.anyKeyDown) 
             {
                 var input = Input.inputString;
@@ -89,6 +108,12 @@ public class PruebaEnemy : Damager
 
         }
 
+    }
+
+    void BuyItem(Item item)
+    {
+        InventoryManager.Instance.Add(item);
+        Debug.Log("Item " + item.itemName + " añadido a la bolsa.");
     }
 
 }

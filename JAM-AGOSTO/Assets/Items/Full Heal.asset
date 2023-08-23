@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f921bd8b940fa44f9050f574c10dc1f, type: 3}
+  m_Name: Full Heal
+  m_EditorClassIdentifier: 
+  id: 3
+  itemName: Dalsy
+  itemDescription: "No hace na pero hostia tu que bueno est\xE1. Me lo tomaba de
+    peque\xF1o aunque no estuviese malo, as\xED que me he quedao"
+  value: 0
+  icon: {fileID: 21300000, guid: d247af41407d8d04095175bc46ab6fc0, type: 3}

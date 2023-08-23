@@ -36,6 +36,7 @@ public class PauseMenu : MonoBehaviour
     {
         //InventoryManager inventoryManager = GetComponent<InventoryManager>();   // Creamos una instancia de InventoryManager para poder acceder desde este metodo, que es estático
         //inventoryManager.ListItems();    // Llamamos a la funcion de InventoryManager.cs
+        InventoryManager.Instance.ListItems();    // Llamamos a la funcion de InventoryManager.cs
 
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;

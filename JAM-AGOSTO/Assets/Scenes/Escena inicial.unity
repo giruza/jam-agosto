@@ -9806,6 +9806,9 @@ MonoBehaviour:
   _object03: {fileID: 21300000, guid: 9e256edc73d2e8f43bbf609ad90a4b00, type: 3}
   _object04: {fileID: 21300000, guid: ebac888b242e3404cbae694e59ddd884, type: 3}
   _hud: {fileID: 561666069}
+  potion: {fileID: 11400000, guid: 945442bf71678ba4db4bce74c0b2c384, type: 2}
+  superPotion: {fileID: 11400000, guid: 13263bb125064e64584d788ac0e89880, type: 2}
+  fullHeal: {fileID: 11400000, guid: 2fb3b3d65c8d0ff44ac3d0a7236fc369, type: 2}
 --- !u!4 &1821612886
 Transform:
   m_ObjectHideFlags: 0
