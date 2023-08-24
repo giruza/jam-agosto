@@ -34,16 +34,18 @@ public class InventoryManager : MonoBehaviour
             Destroy(item.gameObject);
         }
 
-        foreach (var item in Items)
+        foreach (Item item in Items)
         {
+            // Primero instancia el objeto, es decir, lo crea en el canvas
             GameObject obj = Instantiate(InventoryItem, ItemContent);
-            //var itemName = obj.transform.Find("ItemName").GetComponent<Text>();
-            //var itemDescription = obj.transform.Find("ItemDescription").GetComponent<Text>();
-            var itemIcon = obj.transform.Find("ItemIcon").GetComponent<Image>();
+            // Después le asigna el icono que va a tener, usando el correspondiente al objeto que sea
+            obj.GetComponent<Image>().sprite = item.icon;
         
-            //itemName.text = item.itemName;
-            //itemDescription.text = item.itemDescription;
-            itemIcon.sprite = item.icon;
+            // Y para terminar cogemos su componente de botón para usar la función de clickar, que nos envia a otra función de la clase asociada al Panel de info
+            Button buttonComponent = obj.GetComponent<Button>();
+            buttonComponent.onClick.AddListener(() => ItemPanelManager.Instance.ItemPanelData(item));
         }
+
     }
+
 }
