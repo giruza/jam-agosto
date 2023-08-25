@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 //using UnityEngine.InputSystem;      
 
-public class PlayerActions : MonoBehaviour
+public class PlayerActions : Damager
 {
     public Vector3Int coords;
     public MapManager mapManager;
@@ -86,6 +86,8 @@ public class PlayerActions : MonoBehaviour
             if (enemyInPosition)
             {
                 Debug.Log("Enemigo en la celda");
+                Debug.Log(enemyInPosition.GetComponent<Health>().Initial);
+                ApplyDamage(enemyInPosition.GetComponent<Health>());
             }
             else 
             {

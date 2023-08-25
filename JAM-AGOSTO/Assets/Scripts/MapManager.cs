@@ -100,6 +100,7 @@ public class MapManager : MonoBehaviour
     return null;
     }
 
+    //-----------Simplificar con metodo Pathfinding--------------
     public GameObject GetEnemyInPosition(Vector3Int coords){
         foreach(KeyValuePair<GameObject, Vector3Int> entry in enemigos){
             if (entry.Value.x == coords.x && entry.Value.y == coords.y)

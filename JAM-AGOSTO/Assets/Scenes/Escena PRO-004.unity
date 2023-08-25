@@ -7087,8 +7087,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 369e0f56ea9eafb4487550c99f062ddc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _initial: 10
-  _maxValue: 10
+  _initial: 3
+  _maxValue: 3
   OnDie:
     m_PersistentCalls:
       m_Calls: []
@@ -7605,6 +7605,10 @@ PrefabInstance:
       propertyPath: mapManager
       value: 
       objectReference: {fileID: 2056984428}
+    - target: {fileID: 6601016872484350824, guid: 3753532e7af70a943bd4aae8c21be0aa, type: 3}
+      propertyPath: _damageAmount
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6601016872484350824, guid: 3753532e7af70a943bd4aae8c21be0aa, type: 3}
       propertyPath: actionManager
       value: 
