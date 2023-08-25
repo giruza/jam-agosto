@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class ItemPanelDestroyer : MonoBehaviour
 {
+    public GameObject closePanelButton;
     public void DestroyItemPanel()
     {
         Debug.Log("Entrando en DestroyItemPanel()");
-        GameObject instantiatedPanel = GameObject.Find("ItemPanel(Clone)");
+        Transform instantiatedPanel = closePanelButton.transform.parent;
 
         if (instantiatedPanel == null)
         {
@@ -15,7 +16,9 @@ public class ItemPanelDestroyer : MonoBehaviour
         }
         else
         {
-            Destroy(instantiatedPanel.gameObject);
+            //Destroy(instantiatedPanel.gameObject);
+            instantiatedPanel.gameObject.SetActive(false);
         }
+        
     }
 }

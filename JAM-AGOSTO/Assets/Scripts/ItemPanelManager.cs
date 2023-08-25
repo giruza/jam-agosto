@@ -17,18 +17,25 @@ public class ItemPanelManager : MonoBehaviour
     
     public void ItemPanelData(Item item)
     {
-        // Para empezar, buscamos si ya existe el objeto que se crea de la instancia
-        GameObject instantiatedPanel = GameObject.Find("ItemPanel(Clone)");
+        // Para empezar, buscamos al objeto padre para poder meter dentro a su hijo, o manipularlo si ya existiese
+        GameObject itemPanelVessel = GameObject.Find("ItemPanelVessel");
+        GameObject instantiatedPanel;
 
-        if (instantiatedPanel == null)
+        // Mira si itemPanelVessel tiene ya su hijo creado
+        if (itemPanelVessel.transform.childCount > 0)
         {
-            // Si no lo encuentra no existe, por lo que debe crearlo como un sub-objeto de ItemPanelVessel, ya presente en el canvas
-            Debug.Log("No existe instantiatedPanel.");
-            GameObject ItemPanelVessel = GameObject.Find("ItemPanelVessel");
-            instantiatedPanel = Instantiate(itemPanelUI, ItemPanelVessel.transform);    // Habia que instanciarlo coñooooo
+            // En tal caso lo guarda en la variable para después poder manipularlo
+            Debug.Log("Ya existe instantiatedPanel, por lo que no hace falta crearlo de nuevo.");
+            instantiatedPanel = itemPanelVessel.transform.GetChild(0).gameObject;
+        }
+        else
+        {
+            // Y en caso de que no, lo creamos
+            Debug.Log("No existe aún instantiatedPanel.");
+            instantiatedPanel = Instantiate(itemPanelUI, itemPanelVessel.transform);    // Habia que instanciarlo coñooooo
         }
 
-        // Activamos el objeto por si acaso (no creo ni que sea necesario)
+        // Lo activamos por si lo tuviesemos desactivado de haberlo cerrado previamente
         instantiatedPanel.SetActive(true);
 
         /* Y para terminar cogemos los atributos del objeto que nos ha pasado el botón como parámetro de entrada y los usamos para rellenar los sub-objetos del panel

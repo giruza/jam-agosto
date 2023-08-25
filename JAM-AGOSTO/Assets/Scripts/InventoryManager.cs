@@ -29,10 +29,13 @@ public class InventoryManager : MonoBehaviour
     public void ListItems()
     {
         // Limpia el contenido de la lista antes de abrir el menú
+        // Al final comento esto porque por algún motivo se me estaban borrando los objetos la primera vez que cerraba el menú
+        /*
         foreach (Transform item in ItemContent)
         {
             Destroy(item.gameObject);
         }
+        */
 
         foreach (Item item in Items)
         {
