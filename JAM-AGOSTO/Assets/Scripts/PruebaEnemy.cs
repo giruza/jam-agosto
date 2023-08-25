@@ -12,7 +12,6 @@ public class PruebaEnemy : Damager
     [SerializeField] private Sprite _object02;
     [SerializeField] private Sprite _object03;
     [SerializeField] private Sprite _object04;
-
     [SerializeField] private HUD _hud;
 
     private void Update()

@@ -64,7 +64,7 @@ public class EnemyController : MonoBehaviour
         
         
         
-        Debug.Log(name + ": AAAARGH!");
+        /*Debug.Log(name + ": AAAARGH!");*/
     }
 
         public void flip(string direction){
