@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-
     public Vector3Int coords;
     public MapManager mapManager;
     public ActionManager actionManager;
@@ -40,31 +39,51 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    public void Action(){
-        int IA = Random.Range(1, 5);
+    public void Action()
+    {
+        Vector3Int dir = MapManager.Instance.FindNextMove(coords);
 
-        switch (IA){
-            case 1:
-                move(Vector3Int.left);
-                flip("left");
-                break;
-            case 2:
-                move(Vector3Int.right);
-                flip("right");
-                break;
-            case 3:
-                move(Vector3Int.up);
-                break;
-            case 4:
-                move(Vector3Int.down);
-                break;
-            default:
-                break;
+        Debug.Log(gameObject.name + ": " + dir);
+
+        if (dir.Equals(Vector3Int.left)) 
+        {
+            Debug.Log(gameObject.name + ": me muevo hacia la izquierda");
+            move(Vector3Int.left);
         }
-        
-        
-        
-        Debug.Log(name + ": AAAARGH!");
+        else if(dir.Equals(Vector3Int.right))
+        {
+            Debug.Log(gameObject.name + ": me muevo hacia la derecha");
+            move(Vector3Int.right);
+        }
+        else if (dir.Equals(Vector3Int.up))
+        {
+            Debug.Log(gameObject.name + ": me muevo hacia arriba");
+            move(Vector3Int.up);
+        }
+        else if (dir.Equals(Vector3Int.down))
+        {
+            Debug.Log(gameObject.name + ": me muevo hacia abajo");
+            move(Vector3Int.down);
+        }
+
+        //switch (dir){
+        //    case Vector3Int v when v.Equals(Vector3Int.left):
+        //        move(Vector3Int.left);
+        //        flip("left");
+        //        break;
+        //    case Vector3Int v when v.Equals(Vector3Int.right):
+        //        move(Vector3Int.right);
+        //        flip("right");
+        //        break;
+        //    case Vector3Int v when v.Equals(Vector3Int.up):
+        //        move(Vector3Int.up);
+        //        break;
+        //    case Vector3Int v when v.Equals(Vector3Int.down):
+        //        move(Vector3Int.down);
+        //        break;
+        //    default:
+        //        break;
+        //}
     }
 
         public void flip(string direction){
