@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: NoTransitable
   m_EditorClassIdentifier: 
   tiles:
+  - {fileID: 11400000, guid: 5c688b738ee5a974387d9c17c23c2c41, type: 2}
+  - {fileID: 11400000, guid: b37951f1b68725c4195282853a6ea1fa, type: 2}
   - {fileID: 11400000, guid: 2b9dca8d7e127244294735c8e5a79936, type: 2}
   transitable: 0
