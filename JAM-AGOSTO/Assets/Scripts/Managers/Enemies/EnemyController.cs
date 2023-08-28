@@ -25,35 +25,33 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-    }
 
-    void move(Vector3Int direction){
-        if (mapManager.isCellTransitable(coords+direction)){
-            mapManager.RemoveOccupiedTile(coords);
-            coords += direction;
-            transform.position = mapManager.cellToLocal(coords);
-            mapManager.AddOccupiedTile(coords);
-            //Debug.Log("Movimiento a: " + coords);
-        } else {
-            //Debug.Log("No pasarás");
-        }
     }
 
     public void Action()
     {
+        //Recibe la direccion del siguiente movimiento hacia el jugador
         Vector3Int dir = MapManager.Instance.FindNextMove(coords);
 
         Debug.Log(gameObject.name + ": " + dir);
 
-        if (dir.Equals(Vector3Int.left)) 
+        MoveDirection(dir);
+    }
+
+    //Metodo que mueve al enemigo en la direccion indicada
+    private void MoveDirection(Vector3 dir) 
+    {
+        if (dir.Equals(Vector3Int.left))
         {
             Debug.Log(gameObject.name + ": me muevo hacia la izquierda");
             move(Vector3Int.left);
+            flip("left");
         }
-        else if(dir.Equals(Vector3Int.right))
+        else if (dir.Equals(Vector3Int.right))
         {
             Debug.Log(gameObject.name + ": me muevo hacia la derecha");
             move(Vector3Int.right);
+            flip("right");
         }
         else if (dir.Equals(Vector3Int.up))
         {
@@ -65,34 +63,32 @@ public class EnemyController : MonoBehaviour
             Debug.Log(gameObject.name + ": me muevo hacia abajo");
             move(Vector3Int.down);
         }
-
-        //switch (dir){
-        //    case Vector3Int v when v.Equals(Vector3Int.left):
-        //        move(Vector3Int.left);
-        //        flip("left");
-        //        break;
-        //    case Vector3Int v when v.Equals(Vector3Int.right):
-        //        move(Vector3Int.right);
-        //        flip("right");
-        //        break;
-        //    case Vector3Int v when v.Equals(Vector3Int.up):
-        //        move(Vector3Int.up);
-        //        break;
-        //    case Vector3Int v when v.Equals(Vector3Int.down):
-        //        move(Vector3Int.down);
-        //        break;
-        //    default:
-        //        break;
-        //}
     }
 
-        public void flip(string direction){
-        if(direction == "right"){
+    void move(Vector3Int direction)
+    {
+        if (mapManager.isCellTransitable(coords + direction))
+        {
+            mapManager.RemoveOccupiedTile(coords);
+            coords += direction;
+            transform.position = mapManager.cellToLocal(coords);
+            mapManager.AddOccupiedTile(coords);
+            //Debug.Log("Movimiento a: " + coords);
+        }
+        else
+        {
+            //Debug.Log("No pasarás");
+        }
+    }
+    private void flip(string direction)
+    {
+        if (direction == "right")
+        {
             GetComponent<SpriteRenderer>().flipX = true;
         }
-        if(direction == "left"){
+        if (direction == "left")
+        {
             GetComponent<SpriteRenderer>().flipX = false;
-        } 
+        }
     }
-
 }
