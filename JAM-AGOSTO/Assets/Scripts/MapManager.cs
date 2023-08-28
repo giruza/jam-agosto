@@ -5,9 +5,6 @@ using UnityEngine.Tilemaps;
 
 public class MapManager : MonoBehaviour
 {
-    //Instancia de MapManager para llamar a los metodos
-    public static MapManager Instance;
-
     public Tilemap tilemap;
     public Tilemap foremap;
     public List<TileData> tileDatas;
@@ -23,10 +20,6 @@ public class MapManager : MonoBehaviour
     public Camera mainCamera;
     public Camera followCamera;
 
-    //Variables de Pathfinding
-    [SerializeField] private GameObject playerCoords;
-    [SerializeField] private SquareGrid _squareGrid;
-    public Dictionary<Vector3Int, NodeBase> Tiles { get; private set; }
 
 
     private void Awake(){
@@ -36,10 +29,8 @@ public class MapManager : MonoBehaviour
                 dataFromTiles.Add(tile,tileData);
             }
         }
-
-        Instance = this;
     }
-
+    // Start is called before the first frame update
     void Start()
     {
         mainCamera.enabled = false;
@@ -50,11 +41,9 @@ public class MapManager : MonoBehaviour
                 foremap.SetTileFlags(location, TileFlags.None);
             }
         }
-
-        Tiles = _squareGrid.GenerateGrid();
     }
 
-
+    // Update is called once per frame
     void Update()
     {
         OccupiedCellsInForemap();
@@ -184,31 +173,4 @@ public class MapManager : MonoBehaviour
         }
     }
 
-
-    //Metodo que encuentro el siguiente movimiento de los enemigos o npcs
-    public Vector3Int FindNextMove(Vector3Int pos) 
-    {
-        var path = Pathfinding.FindPath(GetTileAtPosition(pos), GetTileAtPosition(GetPlayerCoords()));
-
-        if (path != null)
-        {
-            NodeBase nextMove = path[path.Count - 1];
-            Vector3Int nextPos = nextMove.Pos;
-            Vector3Int dir = nextPos - pos;
-
-            return dir;
-        }
-
-        //Si no hay un camino hacia el jugador se queda quieto
-        return Vector3Int.zero;
-    }
-
-    //Metodo que devuelve el nodo del grid en base a la posicion en el mapa
-    public NodeBase GetTileAtPosition(Vector3Int pos) => Tiles.TryGetValue(pos, out var tile) ? tile : null;
-
-    //Metodo que devuelve la posicion del jugador
-    public Vector3Int GetPlayerCoords() 
-    {
-        return playerCoords.GetComponent<PlayerActions>().coords;
-    }
 }
