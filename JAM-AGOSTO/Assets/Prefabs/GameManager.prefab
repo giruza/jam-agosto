@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7677248793073090436}
   - component: {fileID: 5933914136542811746}
   - component: {fileID: 9114253390443316159}
+  - component: {fileID: -5064872771942863008}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameController
@@ -72,3 +73,18 @@ MonoBehaviour:
   enemyList: []
   player: {fileID: 0}
   turnStatus: 0
+--- !u!114 &-5064872771942863008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2267243122365026615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca7d8cc2bb6d5924d9a5bcdc2cf9635b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Items: []
+  ItemContent: {fileID: 0}
+  InventoryItem: {fileID: 3181790094009144177, guid: 5f8af028d0292ba4b8b2b993537f39de, type: 3}
