@@ -11,5 +11,6 @@ public class Item : ScriptableObject
     public Sprite icon;             // icono del objeto
     public int phase;               // fase actual a la que tenemos mejorada el objeto
     public int maxPhase;            // fase maxima hasta la que se puede mejorar el objeto
-    public int price;               // precio por el cual podemos mejorar una fase del objeto (mirar si queremos que siempre sea el mismo)
+    public int[] price;             // precio por el cual podemos mejorar una fase del objeto (mirar si queremos que siempre sea el mismo)
+    public int[] upgrade;           // cantidad que mejora el objeto por encontrarse en la fase en la que esté
 }

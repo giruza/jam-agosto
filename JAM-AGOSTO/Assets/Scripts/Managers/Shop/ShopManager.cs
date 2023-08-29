@@ -35,11 +35,11 @@ public class ShopManager : MonoBehaviour
             obj.GetComponent<Image>().sprite = item.icon;
             obj.transform.Find("ItemPhase").GetComponent<Slider>().value = item.phase;
             obj.transform.Find("ItemPhase").GetComponent<Slider>().maxValue = item.maxPhase;
-            obj.transform.Find("ItemPrice").GetComponent<TextMeshProUGUI>().text = item.price.ToString() + "$";
+            obj.transform.Find("ItemPrice").GetComponent<TextMeshProUGUI>().text = item.price[item.phase].ToString() + "$";
         
             // Y para terminar cogemos su componente de botón para usar la función de clickar, que nos envia a otra función de la clase asociada al Panel de info
             Button buttonComponent = obj.GetComponent<Button>();
-            buttonComponent.onClick.AddListener(() => ItemPanelManager.Instance.ItemPanelData(item));
+            buttonComponent.onClick.AddListener(() => ItemShopPanelManager.Instance.ItemPanelData(item));
         }
 
     }

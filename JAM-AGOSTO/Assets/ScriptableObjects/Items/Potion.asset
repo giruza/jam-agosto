@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1
   itemName: Poti
-  itemDescription: "Recupera 20 puntos de salud y sabe a horchata. SI no te gusta
-    la horchata adem\xE1s de ser subnormal perdido te jodes por gilip-"
+  itemDescription: "Recupera 20 puntos de salud y sabe a horchata. Si no te gusta
+    la horchata adem\xE1s de ser subnormal perdido te jodes por gilip-."
   value: 20
   icon: {fileID: 21300000, guid: deda4aba56a8e74498b15260d1a69928, type: 3}
   phase: 5
   maxPhase: 10
-  price: 200
+  price: 32000000320000003200000032000000320000003200000032000000320000006400000064000000
+  upgrade: 000000000a000000140000001e00000028000000320000003c00000046000000500000005a00000064000000

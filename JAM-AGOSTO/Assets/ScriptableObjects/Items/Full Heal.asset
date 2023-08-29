@@ -19,5 +19,6 @@ MonoBehaviour:
   value: 0
   icon: {fileID: 21300000, guid: d247af41407d8d04095175bc46ab6fc0, type: 3}
   phase: 2
-  maxPhase: 12
-  price: 850
+  maxPhase: 4
+  price: 64000000c8000000f401000020030000
+  upgrade: 000000001e0000003c0000005a00000078000000
