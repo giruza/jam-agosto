@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 //using UnityEngine.InputSystem;      
 
-public class PlayerActions : MonoBehaviour
+public class PlayerActions : Damager
 {
     public Vector3Int coords;
     public MapManager mapManager;
     public ActionManager actionManager;
-    
+
     /*
     public CustomInput input = null;
     private Vector3 movement = Vector3.zero;
@@ -30,6 +30,11 @@ public class PlayerActions : MonoBehaviour
         movement = Vector3.zero;
     }
     */
+
+    private void Awake()
+    {
+        BasicAttackRange = 1;
+    }
 
     void Start()
     {
@@ -77,18 +82,21 @@ public class PlayerActions : MonoBehaviour
             }
         } else if(actionManager.IsPlayerTurn() && Input.GetMouseButtonDown(0))
         {
-            actionManager.playerStarting();
-            coords = mapManager.GetClickPositionCell();
-            GameObject enemyInPosition = mapManager.GetEnemyInPosition(coords);
-            if (enemyInPosition)
+            var mousePos = mapManager.GetClickPositionCell();
+            GameObject enemyInPosition = mapManager.GetEnemyInPosition(mousePos);
+            if (enemyInPosition && mapManager.IsEnemyInRange(enemyInPosition, BasicAttackRange))
             {
-                Debug.Log("Enemigo en la celda");
+                actionManager.playerStarting();
+                Debug.Log("Enemigo en rango");
+                Debug.Log(enemyInPosition.GetComponent<Health>().Current);
+                ApplyDamage(enemyInPosition.GetComponent<Health>());
+
+                actionManager.playerDone();
             }
             else 
             {
                 Debug.Log("No hay enemigos cerca");
             }
-            actionManager.playerDone();
         }
     }
 

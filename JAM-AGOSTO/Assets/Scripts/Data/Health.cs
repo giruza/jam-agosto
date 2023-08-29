@@ -26,4 +26,10 @@ public class Health : Progresive, IDamageable, IHealable
         if(Current > MaxValue) 
             Current = MaxValue;
     }
+
+    public void Morirse() 
+    {
+        Debug.Log("C muere");
+        Destroy(gameObject);
+    }
 }

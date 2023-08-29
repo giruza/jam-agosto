@@ -260,6 +260,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 369e0f56ea9eafb4487550c99f062ddc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &286935390 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6601016872484350824, guid: 3753532e7af70a943bd4aae8c21be0aa, type: 3}
+  m_PrefabInstance: {fileID: 286935384}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 286935385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47a6680c10a8b3449932f1e4d7c6214e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &461789872
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6054,6 +6065,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damageAmount: 1
+  _basicAttackRange: 0
   ClaraMaria: {fileID: 286935385}
   _object01: {fileID: 21300000, guid: c4e08f7d9aa9b0f4d9257756586cc6d6, type: 3}
   _object02: {fileID: 21300000, guid: 9e256edc73d2e8f43bbf609ad90a4b00, type: 3}
@@ -7702,6 +7714,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 5933914136542811746, guid: fa8a1237794a6d046ba61131cf93f918, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 286935390}
     - target: {fileID: 5933914136542811746, guid: fa8a1237794a6d046ba61131cf93f918, type: 3}
       propertyPath: foremap
       value: 

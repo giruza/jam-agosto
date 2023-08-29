@@ -11,6 +11,7 @@ public class EnemyController : MonoBehaviour
 
     void Awake(){
         actionManager.AddEnemy(gameObject);
+        mapManager.AddEnemy(gameObject);
     }
 
 
@@ -33,7 +34,7 @@ public class EnemyController : MonoBehaviour
         //Recibe la direccion del siguiente movimiento hacia el jugador
         Vector3Int dir = MapManager.Instance.FindNextMove(coords);
 
-        Debug.Log(gameObject.name + ": " + dir);
+        //Debug.Log(gameObject.name + ": " + dir);
 
         MoveDirection(dir);
     }
@@ -43,24 +44,24 @@ public class EnemyController : MonoBehaviour
     {
         if (dir.Equals(Vector3Int.left))
         {
-            Debug.Log(gameObject.name + ": me muevo hacia la izquierda");
+            //Debug.Log(gameObject.name + ": me muevo hacia la izquierda");
             move(Vector3Int.left);
             flip("left");
         }
         else if (dir.Equals(Vector3Int.right))
         {
-            Debug.Log(gameObject.name + ": me muevo hacia la derecha");
+            //Debug.Log(gameObject.name + ": me muevo hacia la derecha");
             move(Vector3Int.right);
             flip("right");
         }
         else if (dir.Equals(Vector3Int.up))
         {
-            Debug.Log(gameObject.name + ": me muevo hacia arriba");
+            //Debug.Log(gameObject.name + ": me muevo hacia arriba");
             move(Vector3Int.up);
         }
         else if (dir.Equals(Vector3Int.down))
         {
-            Debug.Log(gameObject.name + ": me muevo hacia abajo");
+            //Debug.Log(gameObject.name + ": me muevo hacia abajo");
             move(Vector3Int.down);
         }
     }
