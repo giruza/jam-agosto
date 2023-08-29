@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -11,7 +12,6 @@ public class MapManager : MonoBehaviour
     public Dictionary<TileBase,TileData> dataFromTiles;
     public List<Vector3Int> occupiedTiles = new();
     public Dictionary<GameObject, Vector3Int> interactuables = new();
-    public Dictionary<GameObject, Vector3Int> enemigos = new();
     public TileBase mouseTile; 
     public float percentageAlpha;
     //public Vector3Int location;
@@ -63,22 +63,10 @@ public class MapManager : MonoBehaviour
         }*/
     }
 
-    public Vector3Int GetClickPositionCell(){
-        Vector3 worldCoord = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3Int cellPosition = tilemap.WorldToCell(worldCoord);
-        return cellPosition;
-    }
-
     public void AddInteractuable(GameObject enemy, Vector3Int Coords){
         interactuables.Add(enemy,Coords);
         //interactuableList.Add(enemy);
     }
-    
-        public void AddEnemy(GameObject enemy, Vector3Int Coords){
-        enemigos.Add(enemy,Coords);
-    }
-
-
 
     public bool GetInteractuableInRange(Vector3Int coords, int range){
         foreach(KeyValuePair<GameObject, Vector3Int> entry in interactuables){
@@ -90,34 +78,6 @@ public class MapManager : MonoBehaviour
         }
         return false;
     }
-
-    public GameObject GetEnemyInRange(Vector3Int coords, int range){
-        foreach(KeyValuePair<GameObject, Vector3Int> entry in enemigos){
-            if (range >= Mathf.Abs(entry.Value.x - coords.x) + Mathf.Abs(entry.Value.y - coords.y)){
-                return entry.Key;
-            }
-        }
-    return null;
-    }
-
-    //-----------Simplificar con metodo Pathfinding--------------
-    public GameObject GetEnemyInPosition(Vector3Int coords){
-        foreach(KeyValuePair<GameObject, Vector3Int> entry in enemigos){
-            if (entry.Value.x == coords.x && entry.Value.y == coords.y)
-            {
-                return entry.Key;
-            }
-        }
-    return null;
-    }
-    
-
-
-
-    
-
-
-
 
     public bool isCellTransitable(Vector3Int coords){
         bool cellTransitable = true;
