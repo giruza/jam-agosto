@@ -17,3 +17,6 @@ MonoBehaviour:
   itemDescription: Ta mas wena que la otra xd
   value: 50
   icon: {fileID: 21300000, guid: e20308db328b4224ea4a674dcf678fb0, type: 3}
+  phase: 3
+  maxPhase: 8
+  price: 600

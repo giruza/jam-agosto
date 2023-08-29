@@ -18,3 +18,6 @@ MonoBehaviour:
     peque\xF1o aunque no estuviese enfermo, as\xED que as\xED me he quedao"
   value: 0
   icon: {fileID: 21300000, guid: d247af41407d8d04095175bc46ab6fc0, type: 3}
+  phase: 2
+  maxPhase: 12
+  price: 850
