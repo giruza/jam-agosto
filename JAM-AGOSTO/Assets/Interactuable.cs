@@ -11,6 +11,7 @@ public class Interactuable : MonoBehaviour
         transform.position = mapManager.cellToLocal(coords);
         mapManager.AddOccupiedTile(coords);
         mapManager.AddInteractuable(gameObject, coords);
+        mapManager.AddEnemy(gameObject, coords);
     }
 
     

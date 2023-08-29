@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 //using UnityEngine.InputSystem;      
 
-public class PlayerActions : MonoBehaviour
+public class PlayerActions : Damager
 {
     public Vector3Int coords;
     public MapManager mapManager;
@@ -42,7 +42,7 @@ public class PlayerActions : MonoBehaviour
     {
         if(actionManager.IsPlayerTurn() && (Input.inputString != "") /*Input.anyKey*/){
             //Actions();
-            switch(Input.inputString.ToUpper()){
+            switch(Input.inputString.ToUpper()){ 
                 case "A": 
                     if (mapManager.isCellTransitable(coords+Vector3Int.left)){
                         actionManager.playerStarting();
@@ -72,16 +72,29 @@ public class PlayerActions : MonoBehaviour
                 case "E":
                     mapManager.GetInteractuableInRange(coords, 1);
                     break;
+                
                 default:
                     break;
             }
+
         }
-        /*else{
-            if(actionManager.IsPlayerTurn()){
-                actionManager.playerStarting();
-                StartCoroutine(move(Vector3Int.zero));
+        else if (actionManager.IsPlayerTurn() && Input.GetMouseButtonDown(0))
+        {
+            actionManager.playerStarting();
+            coords = mapManager.GetClickPositionCell();
+            GameObject enemyInPosition = mapManager.GetEnemyInPosition(coords);
+            if (enemyInPosition)
+            {
+                Debug.Log("Enemigo en la celda");
+                Debug.Log(enemyInPosition.GetComponent<Health>().Initial);
+                ApplyDamage(enemyInPosition.GetComponent<Health>());
             }
-        }*/
+            else 
+            {
+                Debug.Log("No hay enemigos cerca");
+            }
+            actionManager.playerDone();
+        }
     }
 
 /*
