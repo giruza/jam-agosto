@@ -325,7 +325,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4176645431186165741, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
       propertyPath: coords.x
-      value: 7
+      value: -3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4176645431186165741, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
+      propertyPath: coords.y
+      value: -4
       objectReference: {fileID: 0}
     - target: {fileID: 4176645431186165741, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
       propertyPath: mapManager

@@ -88,8 +88,8 @@ public class PlayerActions : Damager
             {
                 actionManager.playerStarting();
                 Debug.Log("Enemigo en rango");
-                Debug.Log(enemyInPosition.GetComponent<Health>().Current);
                 ApplyDamage(enemyInPosition.GetComponent<Health>());
+                Debug.Log(enemyInPosition.GetComponent<Health>().Current);
 
                 actionManager.playerDone();
             }

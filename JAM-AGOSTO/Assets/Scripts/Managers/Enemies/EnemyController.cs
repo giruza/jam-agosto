@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : Damager
 {
     public Vector3Int coords;
     public MapManager mapManager;
     public ActionManager actionManager;
 
 
-    void Awake(){
-        actionManager.AddEnemy(gameObject);
+    void Awake()
+    {
         mapManager.AddEnemy(gameObject);
     }
 
@@ -23,20 +23,18 @@ public class EnemyController : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    public void Action()
+    //Metodo que realiza la acción de moverse hacia el jugador
+    public void ActionMove() 
     {
         //Recibe la direccion del siguiente movimiento hacia el jugador
         Vector3Int dir = MapManager.Instance.FindNextMove(coords);
 
-        //Debug.Log(gameObject.name + ": " + dir);
-
         MoveDirection(dir);
+    }
+
+    public void ActionAttack() 
+    {
+        ApplyDamage(MapManager.Instance.GetPlayer().GetComponent<Health>());
     }
 
     //Metodo que mueve al enemigo en la direccion indicada
@@ -76,11 +74,8 @@ public class EnemyController : MonoBehaviour
             mapManager.AddOccupiedTile(coords);
             //Debug.Log("Movimiento a: " + coords);
         }
-        else
-        {
-            //Debug.Log("No pasarás");
-        }
     }
+
     private void flip(string direction)
     {
         if (direction == "right")

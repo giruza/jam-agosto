@@ -9,7 +9,7 @@ public abstract class Damager : MonoBehaviour
 
     protected void ApplyDamage(IDamageable damageable) => damageable.Damage(_damageAmount);
 
-    //Borrar este metodo y ponerlo en Healer
+    //-----------------Borrar este metodo y ponerlo en Healer-----------------------//
     protected void ApplyHeal(IHealable healable) => healable.Heal(_damageAmount);
 
     public int BasicAttackRange

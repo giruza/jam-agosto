@@ -27,7 +27,7 @@ public class Pathfinding: MonoBehaviour
             toSearch.Remove(current);
 
             //Herramienta de Debug
-            //current.SetColor(ClosedColor);
+            current.SetColor(ClosedColor);
 
             //Devolver el camino hacia el objetivo 
             if (current == targetNode) 
@@ -45,9 +45,9 @@ public class Pathfinding: MonoBehaviour
 
                 //Herramientas de Debug
 
-                //foreach (var tile in path) tile.SetColor(PathColor);
-                //startNode.SetColor(PathColor);
-                //Debug.Log(path.Count);
+                foreach (var tile in path) tile.SetColor(PathColor);
+                startNode.SetColor(PathColor);
+                Debug.Log(path.Count);
 
                 return path;
             }
@@ -79,7 +79,7 @@ public class Pathfinding: MonoBehaviour
                         toSearch.Add(neighbor);
 
                         //Herramienta de Debug
-                        //neighbor.SetColor(OpenColor);
+                        neighbor.SetColor(OpenColor);
                     }
                 }
             }

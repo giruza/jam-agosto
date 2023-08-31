@@ -5,10 +5,15 @@ using UnityEngine;
 
 public abstract class SM_Enemy : MonoBehaviour
 {
+    [Header("Variables Serializables")]
+
     [SerializeField] private int _movement_range;
     [SerializeField] private int _attack_range;
 
     public State _state;
+
+    [Header("Referencias")]
+    [SerializeField] public EnemyController enemyController;
 
     public int MOVEMENT_RANGE
     {
@@ -35,6 +40,8 @@ public abstract class SM_Enemy : MonoBehaviour
             _attack_range = ATTACK_RANGE;
         }
     }
+
+    public abstract void Turn();
 
     [Serializable]
     public enum State { Idle, Attack, Move}

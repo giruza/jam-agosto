@@ -32,4 +32,11 @@ public class Health : Progresive, IDamageable, IHealable
         Debug.Log("C muere");
         Destroy(gameObject);
     }
+
+    public void MuerteEnemigo() 
+    {
+        MapManager.Instance.RemoveEnemy(gameObject);
+        MapManager.Instance.RemoveOccupiedTile(gameObject.GetComponent<EnemyController>().coords);
+        Destroy(gameObject);
+    }
 }
