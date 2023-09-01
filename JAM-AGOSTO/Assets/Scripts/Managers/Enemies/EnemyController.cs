@@ -2,19 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : Damager
 {
     public Vector3Int coords;
     public MapManager mapManager;
     public ActionManager actionManager;
 
 
-    void Awake(){
-        actionManager.AddEnemy(gameObject);
+    void Awake()
+    {
+        mapManager.AddEnemy(gameObject);
     }
 
-
-    // Start is called before the first frame update
     void Start()
     {
         transform.position = mapManager.cellToLocal(coords);
@@ -22,77 +21,103 @@ public class EnemyController : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
+    //Metodo que realiza la acción de moverse hacia el jugador
+    public void ActionMove() 
     {
+        //Recibe la direccion del siguiente movimiento hacia el jugador
+        Vector3Int dir = MapManager.Instance.FindNextMove(coords);
+
+        MoveDirection(dir);
     }
 
-    void move(Vector3Int direction){
-        if (mapManager.isCellTransitable(coords+direction)){
+    //Metodo que realiza la acción de ataque
+    public void ActionAttack() 
+    {
+        ApplyDamage(MapManager.Instance.GetPlayer().GetComponent<Health>(), DamageAmount);
+    }
+
+    public void ActionMagicAttack() 
+    {
+        int damageInkDepleated = DamageAmount * 5;
+
+        if (MapManager.Instance.GetPlayer().GetComponent<Mana>().Current == 0)
+        {
+            ApplyDamage(MapManager.Instance.GetPlayer().GetComponent<Health>(), damageInkDepleated);
+        }
+        else 
+        {
+            ApplyDamage(MapManager.Instance.GetPlayer().GetComponent<Health>(), DamageAmount);
+            ApplyDamage(MapManager.Instance.GetPlayer().GetComponent<Mana>(), DamageAmount * 3);
+        }
+    }
+
+    public void ActionFlee() 
+    {
+        //Esto es horrible en algun momento lo mejoro
+        Vector3Int dir = MapManager.Instance.FindNextMove(coords);
+
+        MoveDirection(dir * -1);
+    }
+
+    public bool CanFlee() 
+    {
+        //Lógica de cuando huir
+
+        int rnd = Random.Range(0, 2);
+        if (rnd == 0)
+        {
+            return true;
+        }
+        else 
+        {
+            return false;
+        }
+    }
+
+    //Metodo que mueve al enemigo en la direccion indicada
+    private void MoveDirection(Vector3 dir) 
+    {
+        if (dir.Equals(Vector3Int.left))
+        {
+            move(Vector3Int.left);
+            flip("left");
+        }
+        else if (dir.Equals(Vector3Int.right))
+        {
+            move(Vector3Int.right);
+            flip("right");
+        }
+        else if (dir.Equals(Vector3Int.up))
+        {
+            move(Vector3Int.up);
+        }
+        else if (dir.Equals(Vector3Int.down))
+        {
+            move(Vector3Int.down);
+        }
+    }
+
+    void move(Vector3Int direction)
+    {
+        if (mapManager.isCellTransitable(coords + direction))
+        {
             mapManager.RemoveOccupiedTile(coords);
             coords += direction;
             transform.position = mapManager.cellToLocal(coords);
             mapManager.AddOccupiedTile(coords);
             //Debug.Log("Movimiento a: " + coords);
-        } else {
-            //Debug.Log("No pasarás");
         }
     }
 
-    public void Action()
+    private void flip(string direction)
     {
-        Vector3Int dir = MapManager.Instance.FindNextMove(coords);
-
-        Debug.Log(gameObject.name + ": " + dir);
-
-        if (dir.Equals(Vector3Int.left)) 
+        if (direction == "right")
         {
-            Debug.Log(gameObject.name + ": me muevo hacia la izquierda");
-            move(Vector3Int.left);
-        }
-        else if(dir.Equals(Vector3Int.right))
-        {
-            Debug.Log(gameObject.name + ": me muevo hacia la derecha");
-            move(Vector3Int.right);
-        }
-        else if (dir.Equals(Vector3Int.up))
-        {
-            Debug.Log(gameObject.name + ": me muevo hacia arriba");
-            move(Vector3Int.up);
-        }
-        else if (dir.Equals(Vector3Int.down))
-        {
-            Debug.Log(gameObject.name + ": me muevo hacia abajo");
-            move(Vector3Int.down);
-        }
-
-        //switch (dir){
-        //    case Vector3Int v when v.Equals(Vector3Int.left):
-        //        move(Vector3Int.left);
-        //        flip("left");
-        //        break;
-        //    case Vector3Int v when v.Equals(Vector3Int.right):
-        //        move(Vector3Int.right);
-        //        flip("right");
-        //        break;
-        //    case Vector3Int v when v.Equals(Vector3Int.up):
-        //        move(Vector3Int.up);
-        //        break;
-        //    case Vector3Int v when v.Equals(Vector3Int.down):
-        //        move(Vector3Int.down);
-        //        break;
-        //    default:
-        //        break;
-        //}
-    }
-
-        public void flip(string direction){
-        if(direction == "right"){
             GetComponent<SpriteRenderer>().flipX = true;
         }
-        if(direction == "left"){
+        if (direction == "left")
+        {
             GetComponent<SpriteRenderer>().flipX = false;
-        } 
+        }
     }
-
 }

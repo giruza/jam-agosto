@@ -26,4 +26,17 @@ public class Health : Progresive, IDamageable, IHealable
         if(Current > MaxValue) 
             Current = MaxValue;
     }
+
+    public void Morirse() 
+    {
+        Debug.Log("C muere");
+        Destroy(gameObject);
+    }
+
+    public void MuerteEnemigo() 
+    {
+        MapManager.Instance.RemoveEnemy(gameObject);
+        MapManager.Instance.RemoveOccupiedTile(gameObject.GetComponent<EnemyController>().coords);
+        Destroy(gameObject);
+    }
 }

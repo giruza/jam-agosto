@@ -4,32 +4,16 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 //using UnityEngine.InputSystem;      
 
-public class PlayerActions : MonoBehaviour
+public class PlayerActions : Damager
 {
     public Vector3Int coords;
     public MapManager mapManager;
     public ActionManager actionManager;
-    
-    /*
-    public CustomInput input = null;
-    private Vector3 movement = Vector3.zero;
-    void Awake(){
-        input = new CustomInput();
-    }
 
-    void OnEnable(){
-        input.Enable();
-        input.Player.Movement.performed += OnMovementPerformed;
-        input.Player.Movement.canceled += OnMovementCancelled;
+    private void Awake()
+    {
+        BasicAttackRange = 1;
     }
-
-    private void OnMovementPerformed(InputAction.CallbackContext value){
-        movement = value.ReadValue<Vector3>();
-    }
-    private void OnMovementCancelled(InputAction.CallbackContext value){
-        movement = Vector3.zero;
-    }
-    */
 
     void Start()
     {
@@ -37,10 +21,9 @@ public class PlayerActions : MonoBehaviour
         mapManager.AddOccupiedTile(coords);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (actionManager.IsPlayerTurn() && (Input.inputString != "") /*Input.anyKey*/) {
+        if (actionManager.IsPlayerTurn() && (Input.inputString != "")) {
             //Actions();
             switch (Input.inputString.ToUpper()) {
                 case "A":
@@ -77,18 +60,20 @@ public class PlayerActions : MonoBehaviour
             }
         } else if(actionManager.IsPlayerTurn() && Input.GetMouseButtonDown(0))
         {
-            actionManager.playerStarting();
-            coords = mapManager.GetClickPositionCell();
-            GameObject enemyInPosition = mapManager.GetEnemyInPosition(coords);
-            if (enemyInPosition)
+            var mousePos = mapManager.GetClickPositionCell();
+            GameObject enemyInPosition = mapManager.GetEnemyInPosition(mousePos);
+            if (enemyInPosition && mapManager.IsEnemyInRange(enemyInPosition, BasicAttackRange))
             {
-                Debug.Log("Enemigo en la celda");
+                actionManager.playerStarting();
+                ApplyDamage(enemyInPosition.GetComponent<Health>(), DamageAmount);
+                Debug.Log(enemyInPosition.GetComponent<Health>().Current);
+
+                actionManager.playerDone();
             }
             else 
             {
                 Debug.Log("No hay enemigos cerca");
             }
-            actionManager.playerDone();
         }
     }
 
@@ -110,13 +95,6 @@ public class PlayerActions : MonoBehaviour
             GetComponent<SpriteRenderer>().flipX = true;
         } 
     }
-
-    /*void OnGUI() {
-        Event e = Event.current;
-        if (e.isKey)
-            Debug.Log("Detected key code: " + e.keyCode);
-        
-    }*/
 }
 
 

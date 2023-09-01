@@ -5,7 +5,9 @@ public abstract class Progresive : MonoBehaviour
 {
     [SerializeField] private float _initial;
     [SerializeField] private float _maxValue;
-    private float _current;
+    [SerializeField] private float _current;
+
+    private void Awake() => _current = _initial;
 
     public float Current
     {
@@ -39,5 +41,4 @@ public abstract class Progresive : MonoBehaviour
     public float Ratio => _current / _maxValue;
     public Action OnChange;
 
-    private void Awake() => _current = _initial;
 }

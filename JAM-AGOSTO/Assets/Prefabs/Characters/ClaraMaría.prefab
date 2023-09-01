@@ -101,6 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47a6680c10a8b3449932f1e4d7c6214e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _damageAmount: 1
   coords: {x: 0, y: 0, z: 0}
   mapManager: {fileID: 0}
   actionManager: {fileID: 0}

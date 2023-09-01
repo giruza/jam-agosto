@@ -4,19 +4,15 @@ using UnityEngine;
 
 public class ActionManager : MonoBehaviour
 {
-    public List<GameObject> enemyList = new List<GameObject>();
+    //public List<GameObject> enemyList = new List<GameObject>();
     public GameObject player;
     public int turnStatus;
 
-    void Awake(){
-    }
-    // Start is called before the first frame update
     void Start()
     {
         turnStatus = 0;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (IsEnemyTurn()){
@@ -27,8 +23,8 @@ public class ActionManager : MonoBehaviour
 
     IEnumerator EnemyActions(){
         EnemiesStarting();
-        foreach (GameObject enemy in enemyList){
-            enemy.GetComponent<EnemyController>().Action();
+        foreach (GameObject enemy in MapManager.Instance.GetEnemyList()){
+            enemy.GetComponent<SM_Enemy>().Turn();
             changeColor(enemy, Color.red);
             yield return new WaitForSeconds(0.05f);
             changeColor(enemy, Color.white);
@@ -36,11 +32,6 @@ public class ActionManager : MonoBehaviour
         EnemiesDone();
 
     }
-    public void AddEnemy(GameObject enemy){
-        enemyList.Add(enemy);
-    }
-
-    
 
     public bool IsPlayerTurn(){
         if (turnStatus == 0){
@@ -79,5 +70,4 @@ public class ActionManager : MonoBehaviour
     public void changeColor(GameObject objectColored, Color coloringColor){
         objectColored.GetComponent<Renderer>().material.color = coloringColor;
     }
-
 }

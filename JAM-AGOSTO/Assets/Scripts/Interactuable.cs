@@ -7,7 +7,8 @@ public class Interactuable : MonoBehaviour
     public MapManager mapManager;
     public Vector3Int coords;
     
-    void Awake(){
+    void Awake()
+    {
         transform.position = mapManager.cellToLocal(coords);
         mapManager.AddOccupiedTile(coords);
         mapManager.AddInteractuable(gameObject, coords);

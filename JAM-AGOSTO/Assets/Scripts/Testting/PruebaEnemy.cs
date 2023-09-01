@@ -31,7 +31,7 @@ public class PruebaEnemy : Damager
             if (Input.GetKeyDown(KeyCode.Space)) 
             {
                 print(ClaraMaria.GetComponent<Health>().Current);
-                ApplyDamage(ClaraMaria.GetComponent<Health>());
+                ApplyDamage(ClaraMaria.GetComponent<Health>(), DamageAmount);
             }
 
             if (Input.GetKeyDown(KeyCode.M))
@@ -43,7 +43,7 @@ public class PruebaEnemy : Damager
                 if (Input.GetKeyDown(KeyCode.C)) 
             {
                 print(ClaraMaria.GetComponent<Mana>().Current);
-                ApplyDamage(ClaraMaria.GetComponent<Mana>());
+                ApplyDamage(ClaraMaria.GetComponent<Mana>(), DamageAmount);
             }
 
             if (Input.GetKeyDown(KeyCode.X))
@@ -61,7 +61,7 @@ public class PruebaEnemy : Damager
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
                 print(ClaraMaria.GetComponent<Resources>().Current);
-                ApplyDamage(ClaraMaria.GetComponent<Resources>());
+                ApplyDamage(ClaraMaria.GetComponent<Resources>(), DamageAmount);
             }
 
             if (Input.GetKeyDown(KeyCode.I))
