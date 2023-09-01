@@ -14,8 +14,6 @@ public class EnemyController : Damager
         mapManager.AddEnemy(gameObject);
     }
 
-
-    // Start is called before the first frame update
     void Start()
     {
         transform.position = mapManager.cellToLocal(coords);
@@ -32,9 +30,48 @@ public class EnemyController : Damager
         MoveDirection(dir);
     }
 
+    //Metodo que realiza la acción de ataque
     public void ActionAttack() 
     {
-        ApplyDamage(MapManager.Instance.GetPlayer().GetComponent<Health>());
+        ApplyDamage(MapManager.Instance.GetPlayer().GetComponent<Health>(), DamageAmount);
+    }
+
+    public void ActionMagicAttack() 
+    {
+        int damageInkDepleated = DamageAmount * 5;
+
+        if (MapManager.Instance.GetPlayer().GetComponent<Mana>().Current == 0)
+        {
+            ApplyDamage(MapManager.Instance.GetPlayer().GetComponent<Health>(), damageInkDepleated);
+        }
+        else 
+        {
+            ApplyDamage(MapManager.Instance.GetPlayer().GetComponent<Health>(), DamageAmount);
+            ApplyDamage(MapManager.Instance.GetPlayer().GetComponent<Mana>(), DamageAmount * 3);
+        }
+    }
+
+    public void ActionFlee() 
+    {
+        //Esto es horrible en algun momento lo mejoro
+        Vector3Int dir = MapManager.Instance.FindNextMove(coords);
+
+        MoveDirection(dir * -1);
+    }
+
+    public bool CanFlee() 
+    {
+        //Lógica de cuando huir
+
+        int rnd = Random.Range(0, 2);
+        if (rnd == 0)
+        {
+            return true;
+        }
+        else 
+        {
+            return false;
+        }
     }
 
     //Metodo que mueve al enemigo en la direccion indicada
@@ -42,24 +79,20 @@ public class EnemyController : Damager
     {
         if (dir.Equals(Vector3Int.left))
         {
-            //Debug.Log(gameObject.name + ": me muevo hacia la izquierda");
             move(Vector3Int.left);
             flip("left");
         }
         else if (dir.Equals(Vector3Int.right))
         {
-            //Debug.Log(gameObject.name + ": me muevo hacia la derecha");
             move(Vector3Int.right);
             flip("right");
         }
         else if (dir.Equals(Vector3Int.up))
         {
-            //Debug.Log(gameObject.name + ": me muevo hacia arriba");
             move(Vector3Int.up);
         }
         else if (dir.Equals(Vector3Int.down))
         {
-            //Debug.Log(gameObject.name + ": me muevo hacia abajo");
             move(Vector3Int.down);
         }
     }

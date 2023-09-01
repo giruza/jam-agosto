@@ -8,15 +8,11 @@ public class ActionManager : MonoBehaviour
     public GameObject player;
     public int turnStatus;
 
-    void Awake(){
-    }
-    // Start is called before the first frame update
     void Start()
     {
         turnStatus = 0;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (IsEnemyTurn()){
