@@ -12,11 +12,11 @@ public class SM_Enemy_Melee : SM_Enemy
         switch (_state)
         {
             case State.Idle:
-                Debug.Log(gameObject.name + ": Callao");
+                //Debug.Log(gameObject.name + ": Callao");
                 break;
             case State.Attack:
                 //Action Atacar
-                Debug.Log("Estoy Atacando");
+                //Debug.Log("Estoy Atacando");
                 enemyController.ActionAttack();
                 break;
             case State.Move:

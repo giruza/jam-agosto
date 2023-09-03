@@ -166,6 +166,10 @@ public class MapManager : MonoBehaviour
         return Vector3Int.FloorToInt(tilemap.CellToLocal(coords));
     }
 
+    public Vector3Int localToCell(Vector3Int coords){
+        return Vector3Int.FloorToInt(tilemap.LocalToCell(coords));
+    }
+
     public TileBase[] getTilesInDepth(Vector3Int coords){
         int depth = 3;
         TileBase[] tileBases = new TileBase[depth];
