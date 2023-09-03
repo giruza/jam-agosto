@@ -4,36 +4,47 @@ using UnityEngine;
 
 public class EnemySpawner : Spawner
 {
+   public override void Spawn()
+{
+    int counter = 0;
+    Vector3Int spawnPosition;
+    
+    // Obtén las coordenadas del jugador
+    Vector3Int playerCoords = MapManager.Instance.GetPlayerCoords();
 
-    void Start()
+    // Calcula la distancia entre las coordenadas del jugador y las coordenadas generadas
+    int distanceToPlayer = Mathf.RoundToInt(Vector3Int.Distance(spawnerPosition, playerCoords));
+    //Debug.Log("La distancia con el jugador es: " + distanceToPlayer);
+    
+    do 
     {
-        gridPos = new Vector3Int(0, 0, 0); // Establece la posición en la cuadrícula
-        spawnRange = 5; // Establece el rango del spawner
-    }
-    public override void Spawn()
-    {
-        int counter = 0;
-        Vector3Int spawnPosition;
-        do 
+        // Calcula una posición aleatoria dentro del rango del spawner
+        spawnPosition = spawnerPosition + new Vector3Int(Random.Range(-spawnRange, spawnRange), Random.Range(-spawnRange, spawnRange), 0);
+
+        // Comprueba si la distancia es menor o igual a 5 casillas
+        if (distanceToPlayer <= visionRange)
         {
-            // Calcula una posición aleatoria dentro del rango del spawner
-            spawnPosition = gridPos + new Vector3Int(Random.Range(-spawnRange, spawnRange), Random.Range(-spawnRange, spawnRange), 0);
-            //Debug.Log("Intentando spawnear en" + spawnPosition);
-            counter++;
-        }
-        while (!MapManager.Instance.isCellTransitable(spawnPosition) && counter < 10);
-        // Instancia el enemigo en la posición calculada
-        Instantiate(prefab, MapManager.Instance.cellToLocal(spawnPosition), Quaternion.identity);
-        //Debug.Log("Spawn en " + spawnPosition);
+            // Verifica si la posición es transitable
+            if (MapManager.Instance.isCellTransitable(spawnPosition))
+            {
+                // Instancia el enemigo en la posición calculada
+                Instantiate(prefab, MapManager.Instance.cellToLocal(spawnPosition), Quaternion.identity);
 
-
-
-
+                //Debug.Log("Spawn en " + spawnPosition);
+                break; // Sale del bucle una vez que se ha generado una posición válida
+            }
+        }        
+        counter++;
     }
-    private Vector3Int getSpawnCoords()
-    {
-        Vector3Int parentPos = MapManager.Instance.localToCell(Vector3Int.FloorToInt(transform.parent.position));
-        
-        return parentPos;
-    }
+    while (counter < 10);
+}
+
+
+
+
+
+
+
+
+
 }
