@@ -36,6 +36,7 @@ public class EnemyController : Damager
         ApplyDamage(MapManager.Instance.GetPlayer().GetComponent<Health>(), DamageAmount);
     }
 
+    //Metodo que realiza la acción de ataque magico
     public void ActionMagicAttack() 
     {
         int damageInkDepleated = DamageAmount * 5;
@@ -51,12 +52,43 @@ public class EnemyController : Damager
         }
     }
 
+    //Metodo que realiza la acción de huir de los enemigos ranged
     public void ActionFlee() 
     {
-        //Esto es horrible en algun momento lo mejoro
         Vector3Int dir = MapManager.Instance.FindNextMove(coords);
 
-        MoveDirection(dir * -1);
+        //Si no se puede mover 
+        if (MapManager.Instance.isCellTransitable(coords + (dir * -1)))
+        {
+            MoveDirection(dir * -1);
+        }
+        else
+        {
+            dir = new Vector3Int(dir.y, dir.x);
+
+            if (Random.Range(0, 2) == 0)
+            {
+                dir *= -1;
+            }
+
+            if (MapManager.Instance.isCellTransitable(coords + dir))
+            {
+                Debug.Log("Se mueve hacia un lado");
+                MoveDirection(dir);
+            }
+            else if(MapManager.Instance.isCellTransitable(coords + (dir * -1)))
+            {
+                Debug.Log("Se mueve hacia el otro lado");
+                MoveDirection(dir * -1);
+            }
+            else 
+            {
+                //Si no se pueden mover, que los ranged ataquen
+                //---------------Poner un ataque melee para los ranged mas debil (?)---------//
+                ActionMagicAttack();
+            }
+        }
+
     }
 
     public bool CanFlee() 

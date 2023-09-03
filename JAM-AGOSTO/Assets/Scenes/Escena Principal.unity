@@ -345,7 +345,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7299778377328225240, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6393,17 +6393,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1892648833}
     m_Modifications:
+    - target: {fileID: -4443737350207928997, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
+      propertyPath: _enemyType
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -4443737350207928997, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
+      propertyPath: _attackRange
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -4443737350207928997, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
+      propertyPath: _movementRange
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 603534556877288068, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
       propertyPath: m_FlipX
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3218293897462892814, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3218293897462892814, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3218293897462892814, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6439,7 +6451,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4176645431186165741, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
       propertyPath: coords.x
-      value: 7
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4176645431186165741, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
+      propertyPath: coords.y
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4176645431186165741, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
       propertyPath: mapManager
@@ -7339,7 +7355,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7299778377328225240, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7645,6 +7661,10 @@ PrefabInstance:
     - target: {fileID: 7299778377328225240, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
       propertyPath: m_Name
       value: Vandrol
+      objectReference: {fileID: 0}
+    - target: {fileID: 7299778377328225240, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
