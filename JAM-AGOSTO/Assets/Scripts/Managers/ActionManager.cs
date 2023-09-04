@@ -11,6 +11,7 @@ public class ActionManager : MonoBehaviour
 
     void Start()
     {
+        enemySpawner = GameObject.Find("EnemySpawner").GetComponent<Spawner>();
         turnStatus = 0;
     }
 
@@ -62,7 +63,6 @@ public class ActionManager : MonoBehaviour
     }
 
     public void EnemiesStarting(){
-        enemySpawner = GameObject.Find("EnemySpawner").GetComponent<Spawner>();
         enemySpawner.Spawn();
         turnStatus = 3;
     }

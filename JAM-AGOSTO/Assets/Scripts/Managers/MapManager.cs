@@ -37,7 +37,15 @@ public class MapManager : MonoBehaviour
             }
         }
 
-        Instance = this;
+        if (Instance != null && Instance != this) 
+        {
+            Destroy(this);
+        }
+        else 
+        {
+            Instance = this;
+            DontDestroyOnLoad(this);
+        }
     }
 
     void Start()

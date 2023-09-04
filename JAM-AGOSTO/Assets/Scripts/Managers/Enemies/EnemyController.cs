@@ -55,6 +55,11 @@ public class EnemyController : Damager
         }
     }
 
+    public void ActionChargedMeleeAttack() 
+    {
+    
+    }
+
     //Metodo que realiza la acción de huir de los enemigos ranged
     public void ActionFlee() 
     {
