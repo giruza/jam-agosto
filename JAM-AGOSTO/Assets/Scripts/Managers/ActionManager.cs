@@ -7,6 +7,7 @@ public class ActionManager : MonoBehaviour
     //public List<GameObject> enemyList = new List<GameObject>();
     public GameObject player;
     public int turnStatus;
+    private Spawner enemySpawner;
 
     void Start()
     {
@@ -52,6 +53,7 @@ public class ActionManager : MonoBehaviour
     public void playerStarting(){
         turnStatus = 1;
         changeColor(player, Color.green);
+        
     }
 
     public void playerDone(){
@@ -60,6 +62,8 @@ public class ActionManager : MonoBehaviour
     }
 
     public void EnemiesStarting(){
+        enemySpawner = GameObject.Find("EnemySpawner").GetComponent<Spawner>();
+        enemySpawner.Spawn();
         turnStatus = 3;
     }
 

@@ -11,12 +11,15 @@ public class EnemyController : Damager
 
     void Awake()
     {
+        mapManager = FindAnyObjectByType<MapManager>();
+        actionManager = FindAnyObjectByType<ActionManager>();
         mapManager.AddEnemy(gameObject);
     }
 
     void Start()
     {
-        transform.position = mapManager.cellToLocal(coords);
+        coords = mapManager.localToCell(Vector3Int.FloorToInt(transform.position));
+        //transform.position = mapManager.cellToLocal(coords);
         mapManager.AddOccupiedTile(coords);
         
     }

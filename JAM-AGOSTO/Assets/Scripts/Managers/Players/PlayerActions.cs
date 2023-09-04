@@ -67,7 +67,6 @@ public class PlayerActions : Damager
                 actionManager.playerStarting();
                 ApplyDamage(enemyInPosition.GetComponent<Health>(), DamageAmount);
                 Debug.Log(enemyInPosition.GetComponent<Health>().Current);
-
                 actionManager.playerDone();
             }
             else 
