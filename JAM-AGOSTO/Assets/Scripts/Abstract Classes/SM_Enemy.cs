@@ -45,7 +45,7 @@ public abstract class SM_Enemy : MonoBehaviour
     public abstract void Turn();
 
     [Serializable]
-    public enum State { Idle, Attack, Move, Flee}
+    public enum State { Idle, Attack, Move, Flee, Charging, ChargeAttack}
 
     public enum EnemyType { Melee_Basic, Range_Basic, Hybrid, Caster_Basic}
 }

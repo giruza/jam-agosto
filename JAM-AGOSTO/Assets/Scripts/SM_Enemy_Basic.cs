@@ -13,14 +13,24 @@ public class SM_Enemy_Basic : SM_Enemy
         {
             case State.Idle:
                 //Añadir Metodo moverse de forma random o en rutas
-                Debug.Log(gameObject.name + ": Callao");
+                //Debug.Log(gameObject.name + ": Callao");
                 break;
             case State.Attack:
                 //Action Atacar
                 if (_enemyType == EnemyType.Caster_Basic)
-                    enemyController.ActionMagicAttack();
+                    enemyController.ActionMagicAttack(1);
                 else
-                    enemyController.ActionAttack();
+                    enemyController.ActionAttack(1);
+                break;
+            //-------------TO DO: Arbol de comportamientos ataque cargado (JIJIJA)--------------------//
+            case State.ChargeAttack:
+                if (_enemyType == EnemyType.Melee_Basic || _enemyType == EnemyType.Hybrid)
+                    enemyController.ActionChargedMeleeAttack(1);
+                else if (_enemyType == EnemyType.Caster_Basic || _enemyType == EnemyType.Range_Basic)
+                    enemyController.ActionChargedMeleeAttack(ATTACK_RANGE);
+                break;
+            case State.Charging:
+                enemyController.ActionCharging();
                 break;
             case State.Move:
                 //Accion moverse al jugador
@@ -40,24 +50,52 @@ public class SM_Enemy_Basic : SM_Enemy
     //Metodo para comprobar el estado del enemigo
     private State ActualizarEstado() 
     {
+        if(_state == State.Charging) 
+        {
+            return State.ChargeAttack;
+        }
         if (MapManager.Instance.IsEnemyInRange(gameObject, MOVEMENT_RANGE))
         {
             if (MapManager.Instance.IsEnemyInRange(gameObject, ATTACK_RANGE))
             {
-                if (MapManager.Instance.IsEnemyInRange(gameObject, 1) && (_enemyType == EnemyType.Range_Basic || _enemyType == EnemyType.Caster_Basic))
+                if (MapManager.Instance.IsEnemyInRange(gameObject, 1))
                 {
-                    if (enemyController.CanFlee())
+                    if ((_enemyType == EnemyType.Range_Basic || _enemyType == EnemyType.Caster_Basic))
                     {
-                        return State.Flee;
+                        if (enemyController.CanFlee())
+                        {
+                            return State.Flee;
+                        }
+                        else
+                        {
+                            return State.Attack;
+                        }
                     }
-                    else
+                    else 
                     {
-                        return State.Attack;
+                        if (enemyController.CanFlee())
+                        {
+                            return State.Charging;
+                        }
+                        else 
+                        {
+                            return State.Attack;
+                        }
                     }
                 }
                 else
                 {
-                    return State.Attack;
+                    if ((_enemyType == EnemyType.Range_Basic || _enemyType == EnemyType.Caster_Basic)) 
+                    {
+                        if (enemyController.CanFlee())
+                        {
+                            return State.Charging;
+                        }
+                        else
+                        {
+                            return State.Attack;
+                        }
+                    }
                 }
             }
             else 

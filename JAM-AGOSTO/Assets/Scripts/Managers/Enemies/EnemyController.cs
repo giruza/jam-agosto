@@ -34,30 +34,54 @@ public class EnemyController : Damager
     }
 
     //Metodo que realiza la acción de ataque
-    public void ActionAttack() 
+    public void ActionAttack(int damageMultiplier) 
     {
         ApplyDamage(MapManager.Instance.GetPlayer().GetComponent<Health>(), DamageAmount);
     }
 
     //Metodo que realiza la acción de ataque magico
-    public void ActionMagicAttack() 
+    public void ActionMagicAttack(int damageMultiplier) 
     {
         int damageInkDepleated = DamageAmount * 5;
 
         if (MapManager.Instance.GetPlayer().GetComponent<Mana>().Current == 0)
         {
-            ApplyDamage(MapManager.Instance.GetPlayer().GetComponent<Health>(), damageInkDepleated);
+            ApplyDamage(MapManager.Instance.GetPlayer().GetComponent<Health>(), damageInkDepleated * damageMultiplier);
         }
         else 
         {
-            ApplyDamage(MapManager.Instance.GetPlayer().GetComponent<Health>(), DamageAmount);
-            ApplyDamage(MapManager.Instance.GetPlayer().GetComponent<Mana>(), DamageAmount * 3);
+            ApplyDamage(MapManager.Instance.GetPlayer().GetComponent<Health>(), DamageAmount * damageMultiplier);
+            ApplyDamage(MapManager.Instance.GetPlayer().GetComponent<Mana>(), DamageAmount * 3 * damageMultiplier);
         }
     }
 
-    public void ActionChargedMeleeAttack() 
+    //Metodo que realiza el ataque cargado
+    public void ActionChargedMeleeAttack(int range) 
     {
-    
+        int damageMultiplier = 2;
+
+        if (MapManager.Instance.IsEnemyInRange(gameObject, range))
+        {
+            if (gameObject.GetComponent<SM_Enemy>()._enemyType == SM_Enemy.EnemyType.Caster_Basic)
+            {
+                ActionMagicAttack(damageMultiplier);
+            }
+            else 
+            {
+                ActionAttack(damageMultiplier);
+            }
+        }
+        else 
+        {
+            Debug.Log("Toi triste");
+        }
+        actionManager.changeColor(gameObject, Color.white);
+    }
+
+    //Metodo que deja al enemigo en estado de carga
+    public void ActionCharging() 
+    {
+        actionManager.changeColor(gameObject, Color.yellow);
     }
 
     //Metodo que realiza la acción de huir de los enemigos ranged
@@ -93,7 +117,7 @@ public class EnemyController : Damager
             {
                 //Si no se pueden mover, que los ranged ataquen
                 //---------------Poner un ataque melee para los ranged mas debil (?)---------//
-                ActionMagicAttack();
+                ActionMagicAttack(1);
             }
         }
 
