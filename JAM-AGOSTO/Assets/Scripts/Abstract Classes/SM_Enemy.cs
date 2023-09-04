@@ -7,10 +7,11 @@ public abstract class SM_Enemy : MonoBehaviour
 {
     [Header("Variables Serializables")]
 
-    [SerializeField] private int _movement_range;
-    [SerializeField] private int _attack_range;
+    [SerializeField] private int _movementRange;
+    [SerializeField] private int _attackRange;
 
     public State _state;
+    public EnemyType _enemyType;
 
     [Header("Referencias")]
     [SerializeField] public EnemyController enemyController;
@@ -19,12 +20,12 @@ public abstract class SM_Enemy : MonoBehaviour
     {
         get 
         {
-            return _movement_range;
+            return _movementRange;
         }
 
         set 
         {
-            _movement_range = MOVEMENT_RANGE;
+            _movementRange = MOVEMENT_RANGE;
         }
     }
 
@@ -32,17 +33,19 @@ public abstract class SM_Enemy : MonoBehaviour
     {
         get
         {
-            return _attack_range;
+            return _attackRange;
         }
 
         set
         {
-            _attack_range = ATTACK_RANGE;
+            _attackRange = ATTACK_RANGE;
         }
     }
 
     public abstract void Turn();
 
     [Serializable]
-    public enum State { Idle, Attack, Move}
+    public enum State { Idle, Attack, Move, Flee}
+
+    public enum EnemyType { Melee_Basic, Range_Basic, Hybrid, Caster_Basic}
 }

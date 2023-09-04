@@ -16,8 +16,6 @@ public class EnemyController : Damager
         mapManager.AddEnemy(gameObject);
     }
 
-
-    // Start is called before the first frame update
     void Start()
     {
         coords = mapManager.localToCell(Vector3Int.FloorToInt(transform.position));
@@ -35,9 +33,80 @@ public class EnemyController : Damager
         MoveDirection(dir);
     }
 
+    //Metodo que realiza la acción de ataque
     public void ActionAttack() 
     {
-        ApplyDamage(MapManager.Instance.GetPlayer().GetComponent<Health>());
+        ApplyDamage(MapManager.Instance.GetPlayer().GetComponent<Health>(), DamageAmount);
+    }
+
+    //Metodo que realiza la acción de ataque magico
+    public void ActionMagicAttack() 
+    {
+        int damageInkDepleated = DamageAmount * 5;
+
+        if (MapManager.Instance.GetPlayer().GetComponent<Mana>().Current == 0)
+        {
+            ApplyDamage(MapManager.Instance.GetPlayer().GetComponent<Health>(), damageInkDepleated);
+        }
+        else 
+        {
+            ApplyDamage(MapManager.Instance.GetPlayer().GetComponent<Health>(), DamageAmount);
+            ApplyDamage(MapManager.Instance.GetPlayer().GetComponent<Mana>(), DamageAmount * 3);
+        }
+    }
+
+    //Metodo que realiza la acción de huir de los enemigos ranged
+    public void ActionFlee() 
+    {
+        Vector3Int dir = MapManager.Instance.FindNextMove(coords);
+
+        //Si no se puede mover 
+        if (MapManager.Instance.isCellTransitable(coords + (dir * -1)))
+        {
+            MoveDirection(dir * -1);
+        }
+        else
+        {
+            dir = new Vector3Int(dir.y, dir.x);
+
+            if (Random.Range(0, 2) == 0)
+            {
+                dir *= -1;
+            }
+
+            if (MapManager.Instance.isCellTransitable(coords + dir))
+            {
+                Debug.Log("Se mueve hacia un lado");
+                MoveDirection(dir);
+            }
+            else if(MapManager.Instance.isCellTransitable(coords + (dir * -1)))
+            {
+                Debug.Log("Se mueve hacia el otro lado");
+                MoveDirection(dir * -1);
+            }
+            else 
+            {
+                //Si no se pueden mover, que los ranged ataquen
+                //---------------Poner un ataque melee para los ranged mas debil (?)---------//
+                ActionMagicAttack();
+            }
+        }
+
+    }
+
+    public bool CanFlee() 
+    {
+        //Lógica de cuando huir
+
+        int rnd = Random.Range(0, 2);
+        if (rnd == 0)
+        {
+            return true;
+        }
+        else 
+        {
+            return false;
+        }
     }
 
     //Metodo que mueve al enemigo en la direccion indicada
@@ -45,24 +114,20 @@ public class EnemyController : Damager
     {
         if (dir.Equals(Vector3Int.left))
         {
-            //Debug.Log(gameObject.name + ": me muevo hacia la izquierda");
             move(Vector3Int.left);
             flip("left");
         }
         else if (dir.Equals(Vector3Int.right))
         {
-            //Debug.Log(gameObject.name + ": me muevo hacia la derecha");
             move(Vector3Int.right);
             flip("right");
         }
         else if (dir.Equals(Vector3Int.up))
         {
-            //Debug.Log(gameObject.name + ": me muevo hacia arriba");
             move(Vector3Int.up);
         }
         else if (dir.Equals(Vector3Int.down))
         {
-            //Debug.Log(gameObject.name + ": me muevo hacia abajo");
             move(Vector3Int.down);
         }
     }

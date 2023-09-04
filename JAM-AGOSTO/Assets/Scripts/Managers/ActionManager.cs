@@ -9,15 +9,11 @@ public class ActionManager : MonoBehaviour
     public int turnStatus;
     private Spawner enemySpawner;
 
-    void Awake(){
-    }
-    // Start is called before the first frame update
     void Start()
     {
         turnStatus = 0;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (IsEnemyTurn()){

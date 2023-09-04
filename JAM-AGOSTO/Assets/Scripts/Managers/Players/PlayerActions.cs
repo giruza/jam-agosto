@@ -10,27 +10,6 @@ public class PlayerActions : Damager
     public MapManager mapManager;
     public ActionManager actionManager;
 
-    /*
-    public CustomInput input = null;
-    private Vector3 movement = Vector3.zero;
-    void Awake(){
-        input = new CustomInput();
-    }
-
-    void OnEnable(){
-        input.Enable();
-        input.Player.Movement.performed += OnMovementPerformed;
-        input.Player.Movement.canceled += OnMovementCancelled;
-    }
-
-    private void OnMovementPerformed(InputAction.CallbackContext value){
-        movement = value.ReadValue<Vector3>();
-    }
-    private void OnMovementCancelled(InputAction.CallbackContext value){
-        movement = Vector3.zero;
-    }
-    */
-
     private void Awake()
     {
         BasicAttackRange = 1;
@@ -42,10 +21,9 @@ public class PlayerActions : Damager
         mapManager.AddOccupiedTile(coords);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (actionManager.IsPlayerTurn() && (Input.inputString != "") /*Input.anyKey*/) {
+        if (actionManager.IsPlayerTurn() && (Input.inputString != "")) {
             //Actions();
             switch (Input.inputString.ToUpper()) {
                 case "A":
@@ -87,8 +65,7 @@ public class PlayerActions : Damager
             if (enemyInPosition && mapManager.IsEnemyInRange(enemyInPosition, BasicAttackRange))
             {
                 actionManager.playerStarting();
-                Debug.Log("Enemigo en rango");
-                ApplyDamage(enemyInPosition.GetComponent<Health>());
+                ApplyDamage(enemyInPosition.GetComponent<Health>(), DamageAmount);
                 Debug.Log(enemyInPosition.GetComponent<Health>().Current);
                 actionManager.playerDone();
             }
@@ -117,13 +94,6 @@ public class PlayerActions : Damager
             GetComponent<SpriteRenderer>().flipX = true;
         } 
     }
-
-    /*void OnGUI() {
-        Event e = Event.current;
-        if (e.isKey)
-            Debug.Log("Detected key code: " + e.keyCode);
-        
-    }*/
 }
 
 
