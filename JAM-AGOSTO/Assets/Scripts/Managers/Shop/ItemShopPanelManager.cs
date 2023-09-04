@@ -55,6 +55,12 @@ public class ItemShopPanelManager : MonoBehaviour
 
         Button closeButton = instantiatedPanel.transform.Find("CloseButton").GetComponent<Button>();
         closeButton.onClick.AddListener(() => DestroyShopItemPanel());
+
+        instantiatedPanel.transform.Find("+10Button").GetComponent<Button>().onClick.AddListener(() => Add10Souls(item));
+        instantiatedPanel.transform.Find("+100Button").GetComponent<Button>().onClick.AddListener(() => Add100Souls(item));
+        instantiatedPanel.transform.Find("-10Button").GetComponent<Button>().onClick.AddListener(() => Subtract10Souls(item));
+        instantiatedPanel.transform.Find("-100Button").GetComponent<Button>().onClick.AddListener(() => Subtract100Souls(item));
+        instantiatedPanel.transform.Find("ReturnAllButton").GetComponent<Button>().onClick.AddListener(() => ReturnAllSouls(item));
     }
 
     void DestroyShopItemPanel()
@@ -62,6 +68,152 @@ public class ItemShopPanelManager : MonoBehaviour
         ShopManager.Instance.ListShopItems();
         instantiatedPanel.SetActive(false);
         shopWarehouse.SetActive(true);
+    }
+
+    public void Add10Souls(Item item)
+    {
+        int donations = DonationPanelManager.Instance.GetDonations();
+
+        if (donations >= 10)
+        {
+            if (item.souls < (item.price[item.maxPhase - 1] - 10))
+            {
+                DonationPanelManager.Instance.SetDonationOperation(-10);
+                item.souls += 10;
+
+                UpdateItem(item, true);
+            }
+            else if (item.souls < item.price[item.maxPhase - 1])
+            {
+                DonationPanelManager.Instance.SetDonationOperation(item.souls - item.price[item.maxPhase - 1]);
+                item.souls += (item.price[item.maxPhase - 1] - item.souls);
+
+                UpdateItem(item, true);
+            }
+        }
+        else if (donations > 0)
+        {
+            if (item.souls < (item.price[item.maxPhase - 1] - donations))
+            {
+                DonationPanelManager.Instance.SetDonationOperation(-donations);
+                item.souls += donations;
+
+                UpdateItem(item, true);
+            }
+            else if (item.souls < item.price[item.maxPhase - 1])
+            {
+                DonationPanelManager.Instance.SetDonationOperation(item.souls - item.price[item.maxPhase - 1]);
+                item.souls += (item.price[item.maxPhase - 1] - item.souls);
+
+                UpdateItem(item, true);
+            }
+        }
+    }
+
+    public void Add100Souls(Item item)
+    {
+        int donations = DonationPanelManager.Instance.GetDonations();
+
+        if (donations >= 100)
+        {
+            if (item.souls < (item.price[item.maxPhase - 1] - 100))
+            {
+                DonationPanelManager.Instance.SetDonationOperation(-100);
+                item.souls += 100;
+
+                UpdateItem(item, true);
+            }
+            else if (item.souls < item.price[item.maxPhase - 1])
+            {
+                DonationPanelManager.Instance.SetDonationOperation(item.souls - item.price[item.maxPhase - 1]);
+                item.souls += (item.price[item.maxPhase - 1] - item.souls);
+
+                UpdateItem(item, true);
+            }
+        }
+        else if (donations > 0)
+        {
+            if (item.souls < (item.price[item.maxPhase - 1] - donations))
+            {
+                DonationPanelManager.Instance.SetDonationOperation(-donations);
+                item.souls += donations;
+
+                UpdateItem(item, true);
+            }
+            else if (item.souls < item.price[item.maxPhase - 1])
+            {
+                DonationPanelManager.Instance.SetDonationOperation(item.souls - item.price[item.maxPhase - 1]);
+                item.souls += (item.price[item.maxPhase - 1] - item.souls);
+
+                UpdateItem(item, true);
+            }
+        }
+    }
+
+    public void Subtract10Souls(Item item)
+    {
+        if (item.souls >= 10)
+        {
+            DonationPanelManager.Instance.SetDonationOperation(10);
+            item.souls += -10;
+
+            UpdateItem(item, false);
+        }
+        else if (item.souls > 0)
+        {
+            DonationPanelManager.Instance.SetDonationOperation(item.souls);
+            item.souls = 0;
+
+            UpdateItem(item, false);
+        }
+    }
+
+    public void Subtract100Souls(Item item)
+    {
+        if (item.souls >= 100)
+        {
+            DonationPanelManager.Instance.SetDonationOperation(100);
+            item.souls += -100;
+
+            UpdateItem(item, false);
+        }
+        else if (item.souls > 0)
+        {
+            DonationPanelManager.Instance.SetDonationOperation(item.souls);
+            item.souls = 0;
+
+            UpdateItem(item, false);
+        }
+    }
+
+    public void ReturnAllSouls(Item item)
+    {
+        DonationPanelManager.Instance.SetDonationOperation(item.souls);
+        item.souls = 0;
+
+        UpdateItem(item, false);
+    }
+
+    void UpdateItem(Item item, bool sum)
+    {
+        if (sum)
+        {
+            while ((item.phase < item.maxPhase) && (item.souls >= item.price[item.phase]))
+            {
+                item.phase++;
+            }
+        }
+        else
+        {
+            while ((item.phase > 0) && (item.souls < item.price[item.phase - 1]))
+            {
+                item.phase--;
+            }
+        }
+
+        Debug.Log("Mejora: +" + item.upgrade[item.phase].ToString() + "%");
+        instantiatedPanel.transform.Find("UpgradeItemText").GetComponent<TextMeshProUGUI>().text = "+" + item.upgrade[item.phase].ToString() + "%";
+        instantiatedPanel.transform.Find("ItemPhase").GetComponent<Slider>().value = item.phase;
     }
 
 }

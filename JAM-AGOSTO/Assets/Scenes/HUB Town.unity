@@ -967,7 +967,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Salir
+  m_text: Donar
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1056,6 +1056,7 @@ GameObject:
   - component: {fileID: 230486077}
   - component: {fileID: 230486076}
   - component: {fileID: 230486075}
+  - component: {fileID: 230486078}
   m_Layer: 5
   m_Name: Close button
   m_TagString: Untagged
@@ -1127,22 +1128,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 967792890}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 839314850}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 230486078}
+        m_TargetAssemblyTypeName: DonationPanelManager, Assembly-CSharp
+        m_MethodName: SaveDonations
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1189,6 +1178,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 230486073}
   m_CullTransparentMesh: 1
+--- !u!114 &230486078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 230486073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcc4557d97a20b4499c038ea8b226cd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _damageAmount: 0
+  _basicAttackRange: 0
+  playerStats: {fileID: 1069839772}
+  donationPanel: {fileID: 967792890}
+  donations: 0
+  startShopMenu: {fileID: 839314850}
 --- !u!1001 &231148284
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2506,30 +2513,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 839314850}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 967792890}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
       - m_Target: {fileID: 567498389}
         m_TargetAssemblyTypeName: DonationPanelManager, Assembly-CSharp
         m_MethodName: DonationPanelData
@@ -2592,8 +2575,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcc4557d97a20b4499c038ea8b226cd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _damageAmount: 0
+  _basicAttackRange: 0
   playerStats: {fileID: 1069839772}
   donationPanel: {fileID: 967792890}
+  donations: 0
+  startShopMenu: {fileID: 839314850}
 --- !u!1 &638705534
 GameObject:
   m_ObjectHideFlags: 0
@@ -3414,8 +3401,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcc4557d97a20b4499c038ea8b226cd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _damageAmount: 0
+  _basicAttackRange: 0
   playerStats: {fileID: 1069839772}
   donationPanel: {fileID: 967792890}
+  donations: 0
+  startShopMenu: {fileID: 0}
 --- !u!1 &993499071
 GameObject:
   m_ObjectHideFlags: 0
@@ -3836,11 +3827,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8160335472700988582, guid: 3753532e7af70a943bd4aae8c21be0aa, type: 3}
       propertyPath: _initial
-      value: 500
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 8160335472700988582, guid: 3753532e7af70a943bd4aae8c21be0aa, type: 3}
       propertyPath: _maxValue
-      value: 1000
+      value: 2000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3858,6 +3849,7 @@ GameObject:
   - component: {fileID: 1113952380}
   - component: {fileID: 1113952382}
   - component: {fileID: 1113952381}
+  - component: {fileID: 1113952383}
   m_Layer: 5
   m_Name: Message
   m_TagString: Untagged
@@ -3981,6 +3973,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1113952379}
   m_CullTransparentMesh: 1
+--- !u!114 &1113952383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1113952379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0c8991d0180b8b4396f43dbb7c6b7ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1208812574
 GameObject:
   m_ObjectHideFlags: 0
@@ -4439,6 +4443,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1609896538}
   - component: {fileID: 1609896539}
+  - component: {fileID: 1609896540}
   m_Layer: 5
   m_Name: Donation slider
   m_TagString: Untagged
@@ -4518,7 +4523,37 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1609896540}
+        m_TargetAssemblyTypeName: DonationPanelManager, Assembly-CSharp
+        m_MethodName: DonationSliderData
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1609896540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1609896537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcc4557d97a20b4499c038ea8b226cd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _damageAmount: 0
+  _basicAttackRange: 0
+  playerStats: {fileID: 1069839772}
+  donationPanel: {fileID: 967792890}
+  donations: 0
+  startShopMenu: {fileID: 0}
 --- !u!1 &1624266518
 GameObject:
   m_ObjectHideFlags: 0
@@ -5096,6 +5131,7 @@ GameObject:
   - component: {fileID: 1822292873}
   - component: {fileID: 1822292872}
   - component: {fileID: 1822292871}
+  - component: {fileID: 1822292874}
   m_Layer: 5
   m_Name: Close wo/ save button
   m_TagString: Untagged
@@ -5167,22 +5203,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 967792890}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 839314850}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1822292874}
+        m_TargetAssemblyTypeName: DonationPanelManager, Assembly-CSharp
+        m_MethodName: ResetDonations
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5229,6 +5253,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1822292869}
   m_CullTransparentMesh: 1
+--- !u!114 &1822292874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1822292869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcc4557d97a20b4499c038ea8b226cd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _damageAmount: 0
+  _basicAttackRange: 0
+  playerStats: {fileID: 1069839772}
+  donationPanel: {fileID: 967792890}
+  donations: 0
+  startShopMenu: {fileID: 839314850}
 --- !u!1 &1833152887
 GameObject:
   m_ObjectHideFlags: 0
@@ -5820,9 +5862,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Salir sin
-
-    guardar'
+  m_text: Cancelar
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
