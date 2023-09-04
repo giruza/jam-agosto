@@ -53,19 +53,62 @@ public class ItemShopPanelManager : MonoBehaviour
         instantiatedPanel.transform.Find("ItemPhase").GetComponent<Slider>().value = item.phase;
         instantiatedPanel.transform.Find("ItemPhase").GetComponent<Slider>().maxValue = item.maxPhase;
 
+        // Guardo asi la llamada a los botones porque si no se stackean y acaban sumando y restando más de la cuenta
         Button closeButton = instantiatedPanel.transform.Find("CloseButton").GetComponent<Button>();
-        closeButton.onClick.AddListener(() => DestroyShopItemPanel());
+        Button Add10Button = instantiatedPanel.transform.Find("+10Button").GetComponent<Button>();
+        Button Add100Button = instantiatedPanel.transform.Find("+100Button").GetComponent<Button>();
+        Button Subtract10Button = instantiatedPanel.transform.Find("-10Button").GetComponent<Button>();
+        Button Subtract100Button = instantiatedPanel.transform.Find("-100Button").GetComponent<Button>();
+        Button ReturnAllButton = instantiatedPanel.transform.Find("ReturnAllButton").GetComponent<Button>();
+        
+        closeButton.onClick.RemoveAllListeners();
+        Add10Button.onClick.RemoveAllListeners();
+        Add100Button.onClick.RemoveAllListeners();
+        Subtract10Button.onClick.RemoveAllListeners();
+        Subtract100Button.onClick.RemoveAllListeners();
+        ReturnAllButton.onClick.RemoveAllListeners();
 
-        instantiatedPanel.transform.Find("+10Button").GetComponent<Button>().onClick.AddListener(() => Add10Souls(item));
-        instantiatedPanel.transform.Find("+100Button").GetComponent<Button>().onClick.AddListener(() => Add100Souls(item));
-        instantiatedPanel.transform.Find("-10Button").GetComponent<Button>().onClick.AddListener(() => Subtract10Souls(item));
-        instantiatedPanel.transform.Find("-100Button").GetComponent<Button>().onClick.AddListener(() => Subtract100Souls(item));
-        instantiatedPanel.transform.Find("ReturnAllButton").GetComponent<Button>().onClick.AddListener(() => ReturnAllSouls(item));
+        closeButton.onClick.AddListener(() => DestroyShopItemPanel());
+        Add10Button.onClick.AddListener(() => Add10Souls(item));
+        Add100Button.onClick.AddListener(() => Add100Souls(item));
+        Subtract10Button.onClick.AddListener(() => Subtract10Souls(item));
+        Subtract100Button.onClick.AddListener(() => Subtract100Souls(item));
+        ReturnAllButton.onClick.AddListener(() => ReturnAllSouls(item));
     }
 
     void DestroyShopItemPanel()
     {
-        ShopManager.Instance.ListShopItems();
+        /* Es un poco guarrada todo este trozo de código, pero de esta forma fuerzo a que la función "ListShopItems()" que se ejecuta es la de esta tienda, 
+        y no de la última en haber sido creada. Así se actualizan las barras de las fases y sus respectivas mejoras desde el menú de "Shop warehouse",
+        y no es necesario salir y entrar en la tienda para ver las estadísticas de los items/buffos actualizadas. De todas formas a ver si hay una manera
+        no muy laboriosa de hacer esto más bonito y no depender de hacer un padre tan largo y posteriormente buscar el botón que desencadena la acción
+        con un Find(). */
+        GameObject buildingButton = null;
+        Transform parent = transform.parent.transform.parent.transform.parent.transform.parent.transform.parent;
+
+        Debug.Log("Padre: " + parent.name);
+
+        switch (parent.name)
+        {
+            case "Button 1 Menu":
+                buildingButton = GameObject.Find("Button 1");
+                break;
+            case "Button 2 Menu":
+                buildingButton = GameObject.Find("Button 2");
+                break;
+            case "Button 3 Menu":
+                buildingButton = GameObject.Find("Button 3");
+                break;
+            default:
+                buildingButton = GameObject.Find("Button 1");
+                break;
+        }
+        ShopManager shopManager = buildingButton.GetComponent<ShopManager>();
+        shopManager.ListShopItems();
+
+        /* Esta era la función antigua, aunque ha quedado desfasada ya que como he explicado en el párrafo anterior, accedia a una lista de objetos de otra
+        tienda y no a la correspondiente. */
+        //ShopManager.Instance.ListShopItems();
         instantiatedPanel.SetActive(false);
         shopWarehouse.SetActive(true);
     }

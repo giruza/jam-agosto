@@ -43,7 +43,7 @@ public class ShopManager : MonoBehaviour
             // La siguiente línea le aplica la misma funcionalidad al botón editar, hijo de nuestro botón principal
             Button buttonChild = obj.transform.Find("EditButton").GetComponent<Button>();
             buttonChild.onClick.AddListener(() => ItemShopPanelManager.Instance.ItemPanelData(item));
-            Debug.Log("Pole 1");
+            Debug.Log("Pole 1: " + item.itemName);
         }
 
     }
