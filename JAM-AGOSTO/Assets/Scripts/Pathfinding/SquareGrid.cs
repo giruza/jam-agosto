@@ -23,7 +23,7 @@ public class SquareGrid : MonoBehaviour
             Vector3Int location = new Vector3Int(pos.x, pos.y);
 
             var tile = Instantiate(nodeBasePrefab, grid.transform);
-            tile.Init(MapManager.Instance.isCellTransitable(location), location);
+            tile.Init(MapManager.Instance.isCellWalkable(location), location);
             if (tiles.ContainsKey(location)) 
             {
                 Debug.Log("Se ha repetido");

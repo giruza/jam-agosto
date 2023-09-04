@@ -260,6 +260,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 369e0f56ea9eafb4487550c99f062ddc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &286935390 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6601016872484350824, guid: 3753532e7af70a943bd4aae8c21be0aa, type: 3}
+  m_PrefabInstance: {fileID: 286935384}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 286935385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47a6680c10a8b3449932f1e4d7c6214e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &461789872
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -314,7 +325,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4176645431186165741, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
       propertyPath: coords.x
-      value: 7
+      value: -3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4176645431186165741, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
+      propertyPath: coords.y
+      value: -4
       objectReference: {fileID: 0}
     - target: {fileID: 4176645431186165741, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
       propertyPath: mapManager
@@ -327,6 +342,10 @@ PrefabInstance:
     - target: {fileID: 7299778377328225240, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
       propertyPath: m_Name
       value: Vandra
+      objectReference: {fileID: 0}
+    - target: {fileID: 7299778377328225240, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6054,6 +6073,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damageAmount: 1
+  _basicAttackRange: 0
   ClaraMaria: {fileID: 286935385}
   _object01: {fileID: 21300000, guid: c4e08f7d9aa9b0f4d9257756586cc6d6, type: 3}
   _object02: {fileID: 21300000, guid: 9e256edc73d2e8f43bbf609ad90a4b00, type: 3}
@@ -6373,17 +6393,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1892648833}
     m_Modifications:
+    - target: {fileID: -4443737350207928997, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
+      propertyPath: _enemyType
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -4443737350207928997, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
+      propertyPath: _attackRange
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -4443737350207928997, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
+      propertyPath: _movementRange
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 603534556877288068, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
       propertyPath: m_FlipX
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3218293897462892814, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3218293897462892814, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3218293897462892814, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6419,7 +6451,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4176645431186165741, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
       propertyPath: coords.x
-      value: 7
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4176645431186165741, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
+      propertyPath: coords.y
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4176645431186165741, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
       propertyPath: mapManager
@@ -6432,6 +6468,10 @@ PrefabInstance:
     - target: {fileID: 7299778377328225240, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
       propertyPath: m_Name
       value: Vandruchi
+      objectReference: {fileID: 0}
+    - target: {fileID: 7299778377328225240, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6505,6 +6545,10 @@ PrefabInstance:
     - target: {fileID: 7299778377328225240, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
       propertyPath: m_Name
       value: Vandrupilami
+      objectReference: {fileID: 0}
+    - target: {fileID: 7299778377328225240, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6864,6 +6908,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Vandrele
       objectReference: {fileID: 0}
+    - target: {fileID: 7299778377328225240, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6998,89 +7046,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b6e1f22d9b74a8b448fae767f3a6554a, type: 3}
---- !u!1 &1527204780
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1527204781}
-  - component: {fileID: 1527204782}
-  m_Layer: 0
-  m_Name: Mask
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1527204781
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1527204780}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 1.5, y: 2, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!331 &1527204782
-SpriteMask:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1527204780}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 15d0c3709176029428a0da2f8cecf0b5, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: ed98f114c72535548a7014e889fe5866, type: 3}
-  m_MaskAlphaCutoff: 0.348
-  m_FrontSortingLayerID: 0
-  m_BackSortingLayerID: 0
-  m_FrontSortingLayer: 0
-  m_BackSortingLayer: 0
-  m_FrontSortingOrder: 0
-  m_BackSortingOrder: 0
-  m_IsCustomRangeActive: 0
-  m_SpriteSortPoint: 1
 --- !u!20 &1541252802 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 3933160951267680269, guid: 3753532e7af70a943bd4aae8c21be0aa, type: 3}
@@ -7285,6 +7250,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Vandrilo
       objectReference: {fileID: 0}
+    - target: {fileID: 7299778377328225240, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7383,6 +7352,10 @@ PrefabInstance:
     - target: {fileID: 7299778377328225240, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
       propertyPath: m_Name
       value: Vandrini
+      objectReference: {fileID: 0}
+    - target: {fileID: 7299778377328225240, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7621,6 +7594,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1892648833}
     m_Modifications:
+    - target: {fileID: -4443737350207928997, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
+      propertyPath: _attackRange
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4443737350207928997, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
+      propertyPath: _movementRange
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3218293897462892814, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5
@@ -7681,6 +7662,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Vandrol
       objectReference: {fileID: 0}
+    - target: {fileID: 7299778377328225240, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7702,6 +7687,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 5933914136542811746, guid: fa8a1237794a6d046ba61131cf93f918, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 286935390}
     - target: {fileID: 5933914136542811746, guid: fa8a1237794a6d046ba61131cf93f918, type: 3}
       propertyPath: foremap
       value: 
@@ -7785,7 +7774,6 @@ SceneRoots:
   - {fileID: 6410401952834415455}
   - {fileID: 1892648833}
   - {fileID: 196419253}
-  - {fileID: 1527204781}
   - {fileID: 1513743367}
   - {fileID: 717121047}
   - {fileID: 286935384}

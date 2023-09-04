@@ -12,7 +12,7 @@ public class MapManager : MonoBehaviour
     public Tilemap foremap;
     public List<TileData> tileDatas;
     public Dictionary<TileBase,TileData> dataFromTiles;
-    public Dictionary<GameObject, Vector3Int> enemigos = new();
+    private List<GameObject> enemyList = new();
     public List<Vector3Int> occupiedTiles = new();
     public Dictionary<GameObject, Vector3Int> interactuables = new();
     public TileBase mouseTile; 
@@ -24,7 +24,7 @@ public class MapManager : MonoBehaviour
     public Camera followCamera;
 
     //Variables de Pathfinding
-    [SerializeField] private GameObject playerCoords;
+    [SerializeField] private PlayerActions player;
     [SerializeField] private SquareGrid _squareGrid;
     public Dictionary<Vector3Int, NodeBase> Tiles { get; private set; }
 
@@ -81,9 +81,14 @@ public class MapManager : MonoBehaviour
         return cellPosition;
     }
 
-    public void AddEnemy(GameObject enemy, Vector3Int Coords)
+    public void AddEnemy(GameObject enemy)
     {
-        enemigos.Add(enemy, Coords);
+        enemyList.Add(enemy);
+    }
+
+    public void RemoveEnemy(GameObject enemy) 
+    {
+        enemyList.Remove(enemy);
     }
 
     public void AddInteractuable(GameObject enemy, Vector3Int Coords){
@@ -104,40 +109,57 @@ public class MapManager : MonoBehaviour
 
     public GameObject GetEnemyInRange(Vector3Int coords, int range)
     {
-        foreach (KeyValuePair<GameObject, Vector3Int> entry in enemigos)
+        foreach (GameObject entry in enemyList)
         {
-            if (range >= Mathf.Abs(entry.Value.x - coords.x) + Mathf.Abs(entry.Value.y - coords.y))
+            if (range >= Mathf.Abs(entry.GetComponent<EnemyController>().coords.x - coords.x) + Mathf.Abs(entry.GetComponent<EnemyController>().coords.y - coords.y))
             {
-                return entry.Key;
+                return entry;
             }
         }
         return null;
     }
 
+    //-----------Simplificar con metodo Pathfinding--------------
     public GameObject GetEnemyInPosition(Vector3Int coords)
     {
-        foreach (KeyValuePair<GameObject, Vector3Int> entry in enemigos)
+        foreach (GameObject entry in enemyList)
         {
-            if (entry.Value.x == coords.x && entry.Value.y == coords.y)
+            if (entry.GetComponent<EnemyController>().coords.Equals(coords))
             {
-                return entry.Key;
+                return entry;
             }
         }
         return null;
     }
 
-    public bool isCellTransitable(Vector3Int coords){
-        bool cellTransitable = true;
-        if(occupiedTiles.Contains(coords)){
-            return false;
-        }
+    public bool IsEnemyInRange(GameObject enemy, int range) 
+    {
+        return range >= Mathf.Abs(enemy.GetComponent<EnemyController>().coords.x - GetPlayerCoords().x) + Mathf.Abs(enemy.GetComponent<EnemyController>().coords.y - GetPlayerCoords().y);
+    }
+
+    public bool isCellWalkable(Vector3Int coords)
+    {
         foreach (TileBase tile in getTilesInDepth(coords)){
             if (tile != null){
                 if(dataFromTiles[tile].transitable == false)
-                    cellTransitable = false;
+                    return false;
             }
         }
-        return cellTransitable;
+        return true;
+    }
+
+    public bool isCellOccupied(Vector3Int coords) 
+    {
+        if (occupiedTiles.Contains(coords))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public bool isCellTransitable(Vector3Int coords) 
+    {
+        return isCellWalkable(coords) && !isCellOccupied(coords);
     }
 
     public Vector3Int cellToLocal(Vector3Int coords){
@@ -166,10 +188,7 @@ public class MapManager : MonoBehaviour
             Vector3Int location = new Vector3Int(pos.x, pos.y, 0);
             if (foremap.HasTile(location)){
                 //Debug.Log(foremap.GetTile(location));
-                if (occupiedTiles.Contains(location) || occupiedTiles.Contains(location + Vector3Int.down)/*|| occupiedTiles.Contains(location + Vector3Int.up)*/
-                //|| occupiedTiles.Contains(location + Vector3Int.right)|| occupiedTiles.Contains(location + Vector3Int.left)
-                //|| occupiedTiles.Contains(location + Vector3Int.right + Vector3Int.down)|| occupiedTiles.Contains(location + Vector3Int.left + Vector3Int.down)
-                /*|| occupiedTiles.Contains(location + Vector3Int.right + Vector3Int.up)|| occupiedTiles.Contains(location + Vector3Int.left + Vector3Int.up)*/
+                if (occupiedTiles.Contains(location) || occupiedTiles.Contains(location + Vector3Int.down)
                 ){
                     foremap.SetColor(location, new Color(1f, 1f, 1f, percentageAlpha));
                 } else{
@@ -205,6 +224,16 @@ public class MapManager : MonoBehaviour
     //Metodo que devuelve la posicion del jugador
     public Vector3Int GetPlayerCoords() 
     {
-        return playerCoords.GetComponent<PlayerActions>().coords;
+        return player.coords;
+    }
+
+    public GameObject GetPlayer() 
+    {
+        return player.gameObject;
+    }
+
+    public List<GameObject> GetEnemyList() 
+    {
+        return enemyList;
     }
 }

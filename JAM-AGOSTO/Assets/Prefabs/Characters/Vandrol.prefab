@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 3218293897462892814}
   - component: {fileID: 603534556877288068}
   - component: {fileID: 4176645431186165741}
+  - component: {fileID: 8273547941070334890}
+  - component: {fileID: -4443737350207928997}
   m_Layer: 0
   m_Name: Vandrol
   m_TagString: Untagged
@@ -97,5 +99,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30a5c292e92c29d41923319547ac79c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _damageAmount: 1
+  _basicAttackRange: 0
   coords: {x: 1, y: 2, z: 0}
   mapManager: {fileID: 0}
+  actionManager: {fileID: 0}
+--- !u!114 &8273547941070334890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7299778377328225240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 369e0f56ea9eafb4487550c99f062ddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _initial: 3
+  _maxValue: 3
+  _current: 0
+  OnDie:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8273547941070334890}
+        m_TargetAssemblyTypeName: Health, Assembly-CSharp
+        m_MethodName: MuerteEnemigo
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &-4443737350207928997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7299778377328225240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c7dea65dea7c7d448ec2e09ae0b72b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _movementRange: 3
+  _attackRange: 1
+  _state: 0
+  enemyController: {fileID: 4176645431186165741}
