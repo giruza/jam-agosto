@@ -12,6 +12,7 @@ public abstract class SM_Enemy : MonoBehaviour
 
     public State _state;
     public EnemyType _enemyType;
+    public AttackType _attackType;
 
     [Header("Referencias")]
     [SerializeField] public EnemyController enemyController;
@@ -48,4 +49,6 @@ public abstract class SM_Enemy : MonoBehaviour
     public enum State { Idle, Attack, Move, Flee, Charging, ChargeAttack}
 
     public enum EnemyType { Melee_Basic, Range_Basic, Hybrid, Caster_Basic}
+
+    public enum AttackType { RangedExplosion, ChargeAttack }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class EnemyController : Damager
 {
@@ -8,6 +9,21 @@ public class EnemyController : Damager
     public MapManager mapManager;
     public ActionManager actionManager;
 
+    private Vector3Int basePositionExplotion;
+
+    private readonly Vector3Int[] neighbourPositions =
+    {
+        Vector3Int.up,
+        Vector3Int.right,
+        Vector3Int.down,
+        Vector3Int.left,
+    
+        // if you also wanted to get diagonal neighbours
+        Vector3Int.up + Vector3Int.right,
+        Vector3Int.up + Vector3Int.left,
+        Vector3Int.down + Vector3Int.right,
+        Vector3Int.down + Vector3Int.left
+    };
 
     void Awake()
     {
@@ -36,7 +52,8 @@ public class EnemyController : Damager
     //Metodo que realiza la acción de ataque
     public void ActionAttack(int damageMultiplier) 
     {
-        ApplyDamage(MapManager.Instance.GetPlayer().GetComponent<Health>(), DamageAmount);
+        ApplyDamage(MapManager.Instance.GetPlayer().GetComponent<Health>(), DamageAmount * damageMultiplier);
+        Debug.Log("Ataque normal");
     }
 
     //Metodo que realiza la acción de ataque magico
@@ -79,9 +96,42 @@ public class EnemyController : Damager
     }
 
     //Metodo que deja al enemigo en estado de carga
-    public void ActionCharging() 
+    public void ActionCharging(SM_Enemy.AttackType attackType) 
     {
-        actionManager.changeColor(gameObject, Color.yellow);
+        //Dependiendo del tipo de ataque hace una cosa u otra
+        if (attackType == SM_Enemy.AttackType.ChargeAttack)
+        {
+            actionManager.changeColor(gameObject, Color.yellow);
+        } 
+        else if (attackType == SM_Enemy.AttackType.RangedExplosion) 
+        {
+            basePositionExplotion = new Vector3Int(MapManager.Instance.GetPlayerCoords().x + Random.Range(-2, 3), MapManager.Instance.GetPlayerCoords().y + Random.Range(-2, 3));
+            MapManager.Instance.ChangeTileColor(basePositionExplotion, neighbourPositions, Color.yellow);
+            Debug.Log("Cargando ataque explosivo");
+        }
+        //Si es la explosion, marca el area donde va a explotar en el siguiente turno
+    }
+
+    public void ActionRangedExplosion() 
+    {
+        MapManager.Instance.ChangeTileColor(basePositionExplotion, neighbourPositions, Color.red);
+
+        if (basePositionExplotion == MapManager.Instance.GetPlayerCoords())
+        {
+            ActionAttack(3);
+        }
+
+        foreach (var pos in neighbourPositions)
+        {
+            if ((pos + basePositionExplotion) == MapManager.Instance.GetPlayerCoords())
+            {
+                ActionAttack(3);
+            }
+        }
+
+        MapManager.Instance.ChangeTileColor(basePositionExplotion, neighbourPositions, Color.white);
+
+        Debug.Log("Y HACE PUM");
     }
 
     //Metodo que realiza la acción de huir de los enemigos ranged
