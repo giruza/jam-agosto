@@ -40,9 +40,9 @@ public class ShopManager : MonoBehaviour
             // Y para terminar cogemos su componente de botón para usar la función de clickar, que nos envia a otra función de la clase asociada al Panel de info
             Button buttonComponent = obj.GetComponent<Button>();
             buttonComponent.onClick.AddListener(() => ItemShopPanelManager.Instance.ItemPanelData(item));
-            // La siguiente línea le aplica la misma funcionalidad al botón editar, hijo de nuestro botón principal
-            Button buttonChild = obj.transform.Find("EditButton").GetComponent<Button>();
-            buttonChild.onClick.AddListener(() => ItemShopPanelManager.Instance.ItemPanelData(item));
+            // La siguiente línea le aplica la misma funcionalidad al botón editar, hijo de nuestro botón principal // hemos quitado el boton Edit
+            //Button buttonChild = obj.transform.Find("EditButton").GetComponent<Button>();
+            //buttonChild.onClick.AddListener(() => ItemShopPanelManager.Instance.ItemPanelData(item));
             Debug.Log("Pole 1: " + item.itemName);
         }
 
