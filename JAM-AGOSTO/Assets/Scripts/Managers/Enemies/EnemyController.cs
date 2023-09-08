@@ -9,7 +9,8 @@ public class EnemyController : Damager
     public MapManager mapManager;
     public ActionManager actionManager;
 
-    private Vector3Int basePositionExplotion;
+    private Vector3Int baseAttackPosition;
+    private Vector3Int[] baseAttackDirection;
 
     private readonly Vector3Int[] neighbourPositions =
     {
@@ -23,6 +24,38 @@ public class EnemyController : Damager
         Vector3Int.up + Vector3Int.left,
         Vector3Int.down + Vector3Int.right,
         Vector3Int.down + Vector3Int.left
+    };
+
+    private readonly Vector3Int[] lineUpPositions =
+    {
+        Vector3Int.up,
+        new Vector3Int(0, 2),
+        new Vector3Int(0, 3),
+        new Vector3Int(0, 4),
+    };
+
+    private readonly Vector3Int[] lineDownPositions =
+    {
+        Vector3Int.down,
+        new Vector3Int(0, -2),
+        new Vector3Int(0, -3),
+        new Vector3Int(0, -4),
+    };
+
+    private readonly Vector3Int[] lineRightPositions =
+    {
+        Vector3Int.right,
+        new Vector3Int(2, 0),
+        new Vector3Int(3, 0),
+        new Vector3Int(4, 0),
+    };
+
+    private readonly Vector3Int[] lineLeftPositions =
+    {
+        Vector3Int.left,
+        new Vector3Int(-2, 0),
+        new Vector3Int(-3, 0),
+        new Vector3Int(-4, 0),
     };
 
     void Awake()
@@ -102,34 +135,59 @@ public class EnemyController : Damager
         if (attackType == SM_Enemy.AttackType.ChargeAttack)
         {
             actionManager.changeColor(gameObject, Color.yellow);
-        } 
-        else if (attackType == SM_Enemy.AttackType.RangedExplosion) 
+        }
+        else if (attackType == SM_Enemy.AttackType.RangedExplosion)
         {
-            basePositionExplotion = new Vector3Int(MapManager.Instance.GetPlayerCoords().x + Random.Range(-2, 3), MapManager.Instance.GetPlayerCoords().y + Random.Range(-2, 3));
-            MapManager.Instance.ChangeTileColor(basePositionExplotion, neighbourPositions, Color.yellow);
+            //Si es la explosion, marca el area donde va a explotar en el siguiente turno
+            baseAttackPosition = new Vector3Int(MapManager.Instance.GetPlayerCoords().x + Random.Range(-1, 2), MapManager.Instance.GetPlayerCoords().y + Random.Range(-1, 2));
+            MapManager.Instance.ChangeTileColor(baseAttackPosition, neighbourPositions, Color.yellow);
             Debug.Log("Cargando ataque explosivo");
         }
-        //Si es la explosion, marca el area donde va a explotar en el siguiente turno
+        else if(attackType == SM_Enemy.AttackType.LineAttack)
+        {
+            baseAttackPosition = coords;
+            baseAttackDirection = GetDirectionLineAtack();
+
+            MapManager.Instance.ChangeTileColor(baseAttackPosition, baseAttackDirection, Color.yellow);
+            Debug.Log("Cargando ataque linea recta");
+        }
+    }
+
+    public void ActionLineAttack() 
+    {
+        MapManager.Instance.ChangeTileColor(baseAttackPosition, baseAttackDirection, Color.red);
+
+        foreach (var pos in baseAttackDirection)
+        {
+            if ((pos + baseAttackPosition) == MapManager.Instance.GetPlayerCoords())
+            {
+                ActionAttack(3);
+            }
+        }
+
+        Debug.Log("Ataque en line recta");
+
+        MapManager.Instance.ChangeTileColor(baseAttackPosition, baseAttackDirection, Color.white);
     }
 
     public void ActionRangedExplosion() 
     {
-        MapManager.Instance.ChangeTileColor(basePositionExplotion, neighbourPositions, Color.red);
+        MapManager.Instance.ChangeTileColor(baseAttackPosition, neighbourPositions, Color.red);
 
-        if (basePositionExplotion == MapManager.Instance.GetPlayerCoords())
+        if (baseAttackPosition == MapManager.Instance.GetPlayerCoords())
         {
             ActionAttack(3);
         }
 
         foreach (var pos in neighbourPositions)
         {
-            if ((pos + basePositionExplotion) == MapManager.Instance.GetPlayerCoords())
+            if ((pos + baseAttackPosition) == MapManager.Instance.GetPlayerCoords())
             {
                 ActionAttack(3);
             }
         }
 
-        MapManager.Instance.ChangeTileColor(basePositionExplotion, neighbourPositions, Color.white);
+        MapManager.Instance.ChangeTileColor(baseAttackPosition, neighbourPositions, Color.white);
 
         Debug.Log("Y HACE PUM");
     }
@@ -186,6 +244,47 @@ public class EnemyController : Damager
         {
             return false;
         }
+    }
+
+    public bool CheckPlayerInLine()
+    {
+        Vector3 prueba = Vector3.Normalize(MapManager.Instance.GetPlayerCoords() - coords);
+        Debug.Log(prueba); 
+
+        if (prueba.Equals(Vector3.up) || prueba.Equals(Vector3.down) || prueba.Equals(Vector3.right) || prueba.Equals(Vector3.left)) 
+        {
+            return true;
+        }
+        
+        return false;
+    }
+
+    private Vector3Int[] GetDirectionLineAtack() 
+    {
+        Vector3 prueba = Vector3.Normalize(MapManager.Instance.GetPlayerCoords() - baseAttackPosition);
+
+        if (prueba.Equals(Vector3.up))
+        {
+            Debug.Log("Direccion arriba");
+            return lineUpPositions;
+        } 
+        else if (prueba.Equals(Vector3.down)) 
+        {
+            Debug.Log("Direccion abajo");
+            return lineDownPositions;
+        }
+        else if (prueba.Equals(Vector3.right))
+        {
+            Debug.Log("Direccion derecha");
+            return lineRightPositions;
+        }
+        else if (prueba.Equals(Vector3.left))
+        {
+            Debug.Log("Direccion izquierda");
+            return lineLeftPositions;
+        }
+
+        return lineDownPositions;
     }
 
     //Metodo que mueve al enemigo en la direccion indicada

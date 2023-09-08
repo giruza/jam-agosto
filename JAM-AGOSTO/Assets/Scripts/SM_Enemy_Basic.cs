@@ -19,16 +19,20 @@ public class SM_Enemy_Basic : SM_Enemy
                 //Action Atacar
                 if (_enemyType == EnemyType.Caster_Basic)
                     enemyController.ActionMagicAttack(1);
-                else if (enemyController.CanFlee() && _enemyType == EnemyType.Range_Basic)
-                    enemyController.ActionRangedExplosion();
-                else
+                else 
+                {
                     enemyController.ActionAttack(1);
+                }
                 break;
             //-------------TO DO: Arbol de comportamientos ataque cargado (JIJIJA)--------------------//
             case State.ChargeAttack:
                 if (_attackType == AttackType.RangedExplosion) 
                 {
                     enemyController.ActionRangedExplosion();
+                }
+                if (_attackType == AttackType.LineAttack) 
+                {
+                    enemyController.ActionLineAttack();
                 }
                 if(_attackType == AttackType.ChargeAttack) 
                 {
@@ -41,14 +45,29 @@ public class SM_Enemy_Basic : SM_Enemy
             case State.Charging:
                 if (_enemyType == EnemyType.Caster_Basic || _enemyType == EnemyType.Range_Basic) 
                 {
-                    //if (enemyController.CanFlee()) 
-                    //{
+                    float rand = Random.Range(0f, 1f);
+                    //Mirar si el jugador esta en linea recta para poder hacer el ataque en linea recta
+                    if (enemyController.CheckPlayerInLine())
+                    {
+                        Peso_Line_Attack = 0.3f;
+                    }
+                    else 
+                    {
+                        Peso_Line_Attack = 0f;
+                    }
+
+                    if (rand < Peso_Ranged_Explosion)
+                    {
                         _attackType = AttackType.RangedExplosion;
-                    //}
-                    //else 
-                    //{
-                    //    _attackType = AttackType.ChargeAttack;
-                    //}
+                    }
+                    else if (Peso_Ranged_Explosion <= rand && rand < (Peso_Ranged_Explosion + Peso_Line_Attack) && Peso_Line_Attack != 0) 
+                    {
+                        _attackType = AttackType.LineAttack;
+                    }
+                    else if ((Peso_Ranged_Explosion + Peso_Line_Attack) <= rand)
+                    {
+                        _attackType = AttackType.ChargeAttack;
+                    }
                 }
                 enemyController.ActionCharging(_attackType);
                 break;
@@ -99,7 +118,7 @@ public class SM_Enemy_Basic : SM_Enemy
                     }
                     else 
                     {
-                        if (enemyController.CanFlee())
+                        if (Random.Range(0f, 1f) <= Peso_Charge_Attack )
                         {
                             return State.Charging;
                         }

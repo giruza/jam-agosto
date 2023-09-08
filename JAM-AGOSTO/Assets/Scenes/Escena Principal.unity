@@ -6426,6 +6426,26 @@ PrefabInstance:
       propertyPath: _movementRange
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: -4443737350207928997, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
+      propertyPath: _pesoLineAttack
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: -4443737350207928997, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
+      propertyPath: _pesoCahrgeAttack
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: -4443737350207928997, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
+      propertyPath: _pesoChargeAttack
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: -4443737350207928997, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
+      propertyPath: _pesoRngExplosion
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: -4443737350207928997, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
+      propertyPath: _pesoRangedExplosion
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 603534556877288068, guid: b8ba32cca8ecef04c94ee25ba26901e1, type: 3}
       propertyPath: m_FlipX
       value: 0

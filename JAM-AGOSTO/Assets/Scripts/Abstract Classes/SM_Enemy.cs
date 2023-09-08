@@ -14,6 +14,11 @@ public abstract class SM_Enemy : MonoBehaviour
     public EnemyType _enemyType;
     public AttackType _attackType;
 
+    [Header("Pesos Ataques")]
+    [SerializeField] [Range(0f, 1f)] private float _pesoRngExplosion;
+    [SerializeField] [Range(0f, 1f)] private float _pesoLineAttack;
+    [SerializeField] [Range(0f, 1f)] private float _pesoChargeAttack;
+
     [Header("Referencias")]
     [SerializeField] public EnemyController enemyController;
 
@@ -43,6 +48,45 @@ public abstract class SM_Enemy : MonoBehaviour
         }
     }
 
+    public float Peso_Ranged_Explosion
+    {
+        get
+        {
+            return _pesoRngExplosion;
+        }
+
+        set
+        {
+            _pesoRngExplosion = Peso_Ranged_Explosion;
+        }
+    }
+
+    public float Peso_Line_Attack
+    {
+        get
+        {
+            return _pesoLineAttack;
+        }
+
+        set
+        {
+            _pesoLineAttack = Peso_Line_Attack;
+        }
+    }
+
+    public float Peso_Charge_Attack
+    {
+        get
+        {
+            return _pesoChargeAttack;
+        }
+
+        set
+        {
+            _pesoChargeAttack = Peso_Charge_Attack;
+        }
+    }
+
     public abstract void Turn();
 
     [Serializable]
@@ -50,5 +94,5 @@ public abstract class SM_Enemy : MonoBehaviour
 
     public enum EnemyType { Melee_Basic, Range_Basic, Hybrid, Caster_Basic}
 
-    public enum AttackType { RangedExplosion, ChargeAttack }
+    public enum AttackType { RangedExplosion, ChargeAttack, LineAttack }
 }
