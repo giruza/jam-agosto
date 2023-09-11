@@ -58,6 +58,18 @@ public class EnemyController : Damager
         new Vector3Int(-4, 0),
     };
 
+    private readonly Vector3Int[] meleeHorizontalPositions =
+    {
+        Vector3Int.left,
+        Vector3Int.right,
+    };
+
+    private readonly Vector3Int[] meleeVerticalPositions =
+    {
+        Vector3Int.up,
+        Vector3Int.down,
+    };
+
     void Awake()
     {
         mapManager = FindAnyObjectByType<MapManager>();
@@ -86,7 +98,7 @@ public class EnemyController : Damager
     public void ActionAttack(int damageMultiplier) 
     {
         ApplyDamage(MapManager.Instance.GetPlayer().GetComponent<Health>(), DamageAmount * damageMultiplier);
-        Debug.Log("Ataque normal");
+        Debug.Log("Ha hecho: " + damageMultiplier + " daño");
     }
 
     //Metodo que realiza la acción de ataque magico
@@ -132,28 +144,46 @@ public class EnemyController : Damager
     public void ActionCharging(SM_Enemy.AttackType attackType) 
     {
         //Dependiendo del tipo de ataque hace una cosa u otra
-        if (attackType == SM_Enemy.AttackType.ChargeAttack)
+        switch (attackType) 
         {
-            actionManager.changeColor(gameObject, Color.yellow);
-        }
-        else if (attackType == SM_Enemy.AttackType.RangedExplosion)
-        {
-            //Si es la explosion, marca el area donde va a explotar en el siguiente turno
-            baseAttackPosition = new Vector3Int(MapManager.Instance.GetPlayerCoords().x + Random.Range(-1, 2), MapManager.Instance.GetPlayerCoords().y + Random.Range(-1, 2));
-            MapManager.Instance.ChangeTileColor(baseAttackPosition, neighbourPositions, Color.yellow);
-            Debug.Log("Cargando ataque explosivo");
-        }
-        else if(attackType == SM_Enemy.AttackType.LineAttack)
-        {
-            baseAttackPosition = coords;
-            baseAttackDirection = GetDirectionLineAtack();
+            case SM_Enemy.AttackType.ChargeAttack:
+                actionManager.changeColor(gameObject, Color.yellow);
+                break;
+            case SM_Enemy.AttackType.RangedExplosion:
+                //Si es la explosion, marca el area donde va a explotar en el siguiente turno
+                baseAttackPosition = new Vector3Int(MapManager.Instance.GetPlayerCoords().x + Random.Range(-1, 2), MapManager.Instance.GetPlayerCoords().y + Random.Range(-1, 2));
+                MapManager.Instance.ChangeTileColor(baseAttackPosition, neighbourPositions, Color.yellow);
+                Debug.Log("Cargando ataque explosivo");
+                break;
+            case SM_Enemy.AttackType.LineAttack:
+                baseAttackPosition = coords;
+                baseAttackDirection = GetDirectionLineAtack();
 
-            MapManager.Instance.ChangeTileColor(baseAttackPosition, baseAttackDirection, Color.yellow);
-            Debug.Log("Cargando ataque linea recta");
+                MapManager.Instance.ChangeTileColor(baseAttackPosition, baseAttackDirection, Color.yellow);
+                Debug.Log("Cargando ataque linea recta");
+                break;
+            case SM_Enemy.AttackType.AreaMeleeAttack:
+                baseAttackPosition = MapManager.Instance.GetPlayerCoords();
+
+                Vector3 prueba = Vector3.Normalize(baseAttackPosition - coords);
+                if (prueba.Equals(Vector3.up) || prueba.Equals(Vector3.down))
+                {
+                    baseAttackDirection = meleeHorizontalPositions;
+                }
+                else 
+                {
+                    baseAttackDirection = meleeVerticalPositions;
+                }
+
+                MapManager.Instance.ChangeTileColor(baseAttackPosition, baseAttackDirection, Color.yellow);
+                Debug.Log("Cargando ataque melee en area");
+                break;
+            default:
+                break;
         }
     }
 
-    public void ActionLineAttack() 
+    public void ActionAreaAttack() 
     {
         MapManager.Instance.ChangeTileColor(baseAttackPosition, baseAttackDirection, Color.red);
 
@@ -249,7 +279,7 @@ public class EnemyController : Damager
     public bool CheckPlayerInLine()
     {
         Vector3 prueba = Vector3.Normalize(MapManager.Instance.GetPlayerCoords() - coords);
-        Debug.Log(prueba); 
+        //Debug.Log(prueba); 
 
         if (prueba.Equals(Vector3.up) || prueba.Equals(Vector3.down) || prueba.Equals(Vector3.right) || prueba.Equals(Vector3.left)) 
         {

@@ -32,9 +32,13 @@ public class SM_Enemy_Basic : SM_Enemy
                 }
                 if (_attackType == AttackType.LineAttack) 
                 {
-                    enemyController.ActionLineAttack();
+                    enemyController.ActionAreaAttack();
                 }
-                if(_attackType == AttackType.ChargeAttack) 
+                if (_attackType == AttackType.AreaMeleeAttack) 
+                {
+                    enemyController.ActionAreaAttack();
+                }
+                if (_attackType == AttackType.ChargeAttack) 
                 {
                     if (_enemyType == EnemyType.Melee_Basic || _enemyType == EnemyType.Hybrid)
                         enemyController.ActionChargedMeleeAttack(1);
@@ -43,28 +47,47 @@ public class SM_Enemy_Basic : SM_Enemy
                 }
                 break;
             case State.Charging:
+                float rand = Random.Range(0f, 1f);
                 if (_enemyType == EnemyType.Caster_Basic || _enemyType == EnemyType.Range_Basic) 
                 {
-                    float rand = Random.Range(0f, 1f);
                     //Mirar si el jugador esta en linea recta para poder hacer el ataque en linea recta
                     if (enemyController.CheckPlayerInLine())
                     {
+                        Debug.Log("El jugador SI esta en linea");
                         Peso_Line_Attack = 0.3f;
                     }
                     else 
                     {
+                        Debug.Log("El jugador NO esta en linea");
                         Peso_Line_Attack = 0f;
                     }
+
+                    Debug.Log(Peso_Line_Attack);
 
                     if (rand < Peso_Ranged_Explosion)
                     {
                         _attackType = AttackType.RangedExplosion;
                     }
-                    else if (Peso_Ranged_Explosion <= rand && rand < (Peso_Ranged_Explosion + Peso_Line_Attack) && Peso_Line_Attack != 0) 
+                    else if (Peso_Line_Attack != 0 && Peso_Ranged_Explosion <= rand && rand < (Peso_Ranged_Explosion + Peso_Line_Attack))
                     {
                         _attackType = AttackType.LineAttack;
                     }
                     else if ((Peso_Ranged_Explosion + Peso_Line_Attack) <= rand)
+                    {
+                        _attackType = AttackType.ChargeAttack;
+                    }
+                    else 
+                    {
+                        _attackType = AttackType.ChargeAttack;
+                    }
+                }
+                else 
+                {
+                    if (rand < Peso_Line_Attack)
+                    {
+                        _attackType = AttackType.AreaMeleeAttack;
+                    }
+                    else 
                     {
                         _attackType = AttackType.ChargeAttack;
                     }
@@ -131,7 +154,7 @@ public class SM_Enemy_Basic : SM_Enemy
                 //Si no esta a distancia melee, si es un enemigo a rango decide si hacer un ataque normal o cargar un ataque
                 else
                 {
-                    if ((_enemyType == EnemyType.Range_Basic || _enemyType == EnemyType.Caster_Basic)) 
+                    if ((_enemyType == EnemyType.Range_Basic || _enemyType == EnemyType.Caster_Basic) || _enemyType == EnemyType.Hybrid) 
                     {
                         if (enemyController.CanFlee())
                         {

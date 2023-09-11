@@ -31,7 +31,7 @@ public abstract class SM_Enemy : MonoBehaviour
 
         set 
         {
-            _movementRange = MOVEMENT_RANGE;
+            _movementRange = value;
         }
     }
 
@@ -44,7 +44,7 @@ public abstract class SM_Enemy : MonoBehaviour
 
         set
         {
-            _attackRange = ATTACK_RANGE;
+            _attackRange = value;
         }
     }
 
@@ -57,7 +57,7 @@ public abstract class SM_Enemy : MonoBehaviour
 
         set
         {
-            _pesoRngExplosion = Peso_Ranged_Explosion;
+            _pesoRngExplosion = value;
         }
     }
 
@@ -70,7 +70,7 @@ public abstract class SM_Enemy : MonoBehaviour
 
         set
         {
-            _pesoLineAttack = Peso_Line_Attack;
+            _pesoLineAttack = value;
         }
     }
 
@@ -83,7 +83,7 @@ public abstract class SM_Enemy : MonoBehaviour
 
         set
         {
-            _pesoChargeAttack = Peso_Charge_Attack;
+            _pesoChargeAttack = value;
         }
     }
 
@@ -94,5 +94,5 @@ public abstract class SM_Enemy : MonoBehaviour
 
     public enum EnemyType { Melee_Basic, Range_Basic, Hybrid, Caster_Basic}
 
-    public enum AttackType { RangedExplosion, ChargeAttack, LineAttack }
+    public enum AttackType { RangedExplosion, ChargeAttack, LineAttack, AreaMeleeAttack }
 }
