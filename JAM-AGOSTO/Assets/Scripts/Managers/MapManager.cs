@@ -241,6 +241,7 @@ public class MapManager : MonoBehaviour
     //Metodo que devuelve el nodo del grid en base a la posicion en el mapa
     public NodeBase GetTileAtPosition(Vector3Int pos) => Nodes.TryGetValue(pos, out var tile) ? tile : null;
 
+    //Metodo que cambia el color de los tiles con una posicion base y una lista de direcciones
     public void ChangeTileColor(Vector3Int tileBase, Vector3Int[] positions, Color color) 
     {
         tilemap.SetColor(tileBase, color);

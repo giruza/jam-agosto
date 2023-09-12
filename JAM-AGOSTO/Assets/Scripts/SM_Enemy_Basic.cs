@@ -28,15 +28,18 @@ public class SM_Enemy_Basic : SM_Enemy
             case State.ChargeAttack:
                 if (_attackType == AttackType.RangedExplosion) 
                 {
-                    enemyController.ActionRangedExplosion();
+                    enemyController.ActionAreaAttack(3);
+                    Debug.Log("Ataque Explosion");
                 }
                 if (_attackType == AttackType.LineAttack) 
                 {
-                    enemyController.ActionAreaAttack();
+                    enemyController.ActionAreaAttack(3);
+                    Debug.Log("Ataque en linea");
                 }
                 if (_attackType == AttackType.AreaMeleeAttack) 
                 {
-                    enemyController.ActionAreaAttack();
+                    enemyController.ActionAreaAttack(3);
+                    Debug.Log("Ataque melee en area");
                 }
                 if (_attackType == AttackType.ChargeAttack) 
                 {

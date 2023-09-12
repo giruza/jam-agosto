@@ -12,6 +12,7 @@ public class EnemyController : Damager
     private Vector3Int baseAttackPosition;
     private Vector3Int[] baseAttackDirection;
 
+    //Area Explosion Rango
     private readonly Vector3Int[] neighbourPositions =
     {
         Vector3Int.up,
@@ -26,31 +27,29 @@ public class EnemyController : Damager
         Vector3Int.down + Vector3Int.left
     };
 
-    private readonly Vector3Int[] lineUpPositions =
+    //Area Ataque en Linea Recta
+    private static readonly Vector3Int[] lineUpPositions =
     {
         Vector3Int.up,
         new Vector3Int(0, 2),
         new Vector3Int(0, 3),
         new Vector3Int(0, 4),
     };
-
-    private readonly Vector3Int[] lineDownPositions =
+    private static readonly Vector3Int[] lineDownPositions =
     {
         Vector3Int.down,
         new Vector3Int(0, -2),
         new Vector3Int(0, -3),
         new Vector3Int(0, -4),
     };
-
-    private readonly Vector3Int[] lineRightPositions =
+    private static readonly Vector3Int[] lineRightPositions =
     {
         Vector3Int.right,
         new Vector3Int(2, 0),
         new Vector3Int(3, 0),
         new Vector3Int(4, 0),
     };
-
-    private readonly Vector3Int[] lineLeftPositions =
+    private static readonly Vector3Int[] lineLeftPositions =
     {
         Vector3Int.left,
         new Vector3Int(-2, 0),
@@ -58,16 +57,46 @@ public class EnemyController : Damager
         new Vector3Int(-4, 0),
     };
 
-    private readonly Vector3Int[] meleeHorizontalPositions =
+    private readonly Vector3Int[][] linePositions = new Vector3Int[][] 
     {
-        Vector3Int.left,
-        Vector3Int.right,
+        lineUpPositions,
+        lineDownPositions,
+        lineRightPositions,
+        lineLeftPositions
     };
 
-    private readonly Vector3Int[] meleeVerticalPositions =
+    //Area Melee
+    private static readonly Vector3Int[] meleeUpPositions =
     {
         Vector3Int.up,
+        new Vector3Int(-1, 1),
+        new Vector3Int(1, 1),
+    };
+    private static readonly Vector3Int[] meleeDownPositions =
+    {
         Vector3Int.down,
+        new Vector3Int(-1, -1),
+        new Vector3Int(1, -1),
+    };
+    private static readonly Vector3Int[] meleeRightPositions =
+    {
+        Vector3Int.right,
+        new Vector3Int(1, 1),
+        new Vector3Int(1, -1),
+    };
+    private static readonly Vector3Int[] meleeLeftPositions =
+    {
+        Vector3Int.left,
+        new Vector3Int(-1, 1),
+        new Vector3Int(-1, -1),
+    };
+
+    private readonly Vector3Int[][] meleePositions = new Vector3Int[][]
+    {
+        meleeUpPositions,
+        meleeDownPositions,
+        meleeRightPositions,
+        meleeLeftPositions
     };
 
     void Awake()
@@ -152,28 +181,18 @@ public class EnemyController : Damager
             case SM_Enemy.AttackType.RangedExplosion:
                 //Si es la explosion, marca el area donde va a explotar en el siguiente turno
                 baseAttackPosition = new Vector3Int(MapManager.Instance.GetPlayerCoords().x + Random.Range(-1, 2), MapManager.Instance.GetPlayerCoords().y + Random.Range(-1, 2));
+                baseAttackDirection = neighbourPositions;
                 MapManager.Instance.ChangeTileColor(baseAttackPosition, neighbourPositions, Color.yellow);
                 Debug.Log("Cargando ataque explosivo");
                 break;
             case SM_Enemy.AttackType.LineAttack:
-                baseAttackPosition = coords;
-                baseAttackDirection = GetDirectionLineAtack();
+                baseAttackDirection = GetDirectionAreaAttack(linePositions);
 
                 MapManager.Instance.ChangeTileColor(baseAttackPosition, baseAttackDirection, Color.yellow);
                 Debug.Log("Cargando ataque linea recta");
                 break;
             case SM_Enemy.AttackType.AreaMeleeAttack:
-                baseAttackPosition = MapManager.Instance.GetPlayerCoords();
-
-                Vector3 prueba = Vector3.Normalize(baseAttackPosition - coords);
-                if (prueba.Equals(Vector3.up) || prueba.Equals(Vector3.down))
-                {
-                    baseAttackDirection = meleeHorizontalPositions;
-                }
-                else 
-                {
-                    baseAttackDirection = meleeVerticalPositions;
-                }
+                baseAttackDirection = GetDirectionAreaAttack(meleePositions);
 
                 MapManager.Instance.ChangeTileColor(baseAttackPosition, baseAttackDirection, Color.yellow);
                 Debug.Log("Cargando ataque melee en area");
@@ -183,43 +202,25 @@ public class EnemyController : Damager
         }
     }
 
-    public void ActionAreaAttack() 
+    //Se comprueba si el jugador esta en algun tile del ataque y si esta, le hace daño
+    public void ActionAreaAttack(int damage) 
     {
         MapManager.Instance.ChangeTileColor(baseAttackPosition, baseAttackDirection, Color.red);
+
+        if (baseAttackPosition == MapManager.Instance.GetPlayerCoords())
+        {
+            ActionAttack(damage);
+        }
 
         foreach (var pos in baseAttackDirection)
         {
             if ((pos + baseAttackPosition) == MapManager.Instance.GetPlayerCoords())
             {
-                ActionAttack(3);
+                ActionAttack(damage);
             }
         }
-
-        Debug.Log("Ataque en line recta");
 
         MapManager.Instance.ChangeTileColor(baseAttackPosition, baseAttackDirection, Color.white);
-    }
-
-    public void ActionRangedExplosion() 
-    {
-        MapManager.Instance.ChangeTileColor(baseAttackPosition, neighbourPositions, Color.red);
-
-        if (baseAttackPosition == MapManager.Instance.GetPlayerCoords())
-        {
-            ActionAttack(3);
-        }
-
-        foreach (var pos in neighbourPositions)
-        {
-            if ((pos + baseAttackPosition) == MapManager.Instance.GetPlayerCoords())
-            {
-                ActionAttack(3);
-            }
-        }
-
-        MapManager.Instance.ChangeTileColor(baseAttackPosition, neighbourPositions, Color.white);
-
-        Debug.Log("Y HACE PUM");
     }
 
     //Metodo que realiza la acción de huir de los enemigos ranged
@@ -276,6 +277,7 @@ public class EnemyController : Damager
         }
     }
 
+    //Metodo que comprueba si el jugador esta en linea con el enemigo
     public bool CheckPlayerInLine()
     {
         Vector3 prueba = Vector3.Normalize(MapManager.Instance.GetPlayerCoords() - coords);
@@ -289,29 +291,34 @@ public class EnemyController : Damager
         return false;
     }
 
-    private Vector3Int[] GetDirectionLineAtack() 
+    //Metodo que actualiza la posicion base del ataque y las direcciones del mismo
+    private Vector3Int[] GetDirectionAreaAttack(Vector3Int[][] positions) 
     {
-        Vector3 prueba = Vector3.Normalize(MapManager.Instance.GetPlayerCoords() - baseAttackPosition);
+        Vector3 prueba = Vector3.Normalize(MapManager.Instance.GetPlayerCoords() - coords);
 
         if (prueba.Equals(Vector3.up))
         {
             Debug.Log("Direccion arriba");
-            return lineUpPositions;
+            baseAttackPosition = Vector3Int.up + coords;
+            return positions[0];
         } 
         else if (prueba.Equals(Vector3.down)) 
         {
             Debug.Log("Direccion abajo");
-            return lineDownPositions;
+            baseAttackPosition = Vector3Int.down + coords;
+            return positions[1];
         }
         else if (prueba.Equals(Vector3.right))
         {
             Debug.Log("Direccion derecha");
-            return lineRightPositions;
+            baseAttackPosition = Vector3Int.right + coords;
+            return positions[2];
         }
         else if (prueba.Equals(Vector3.left))
         {
             Debug.Log("Direccion izquierda");
-            return lineLeftPositions;
+            baseAttackPosition = Vector3Int.left + coords;
+            return positions[3];
         }
 
         return lineDownPositions;
