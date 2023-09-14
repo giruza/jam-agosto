@@ -11,6 +11,7 @@ public class ActionManager : MonoBehaviour
 
     void Start()
     {
+        enemySpawner = GameObject.Find("EnemySpawner").GetComponent<Spawner>();
         turnStatus = 0;
     }
 
@@ -26,9 +27,9 @@ public class ActionManager : MonoBehaviour
         EnemiesStarting();
         foreach (GameObject enemy in MapManager.Instance.GetEnemyList()){
             enemy.GetComponent<SM_Enemy>().Turn();
-            changeColor(enemy, Color.red);
+            //changeColor(enemy, Color.red);
             yield return new WaitForSeconds(0.05f);
-            changeColor(enemy, Color.white);
+            //changeColor(enemy, Color.white);
         }
         EnemiesDone();
 
@@ -62,7 +63,6 @@ public class ActionManager : MonoBehaviour
     }
 
     public void EnemiesStarting(){
-        enemySpawner = GameObject.Find("EnemySpawner").GetComponent<Spawner>();
         enemySpawner.Spawn();
         turnStatus = 3;
     }

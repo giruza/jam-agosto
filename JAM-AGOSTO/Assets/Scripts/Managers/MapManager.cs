@@ -26,8 +26,7 @@ public class MapManager : MonoBehaviour
     //Variables de Pathfinding
     [SerializeField] private PlayerActions player;
     [SerializeField] private SquareGrid _squareGrid;
-    public Dictionary<Vector3Int, NodeBase> Tiles { get; private set; }
-
+    public Dictionary<Vector3Int, NodeBase> Nodes { get; private set; }
 
     private void Awake(){
         dataFromTiles =  new  Dictionary<TileBase,TileData>();
@@ -37,7 +36,15 @@ public class MapManager : MonoBehaviour
             }
         }
 
-        Instance = this;
+        if (Instance != null && Instance != this) 
+        {
+            Destroy(this);
+        }
+        else 
+        {
+            Instance = this;
+            DontDestroyOnLoad(this);
+        }
     }
 
     void Start()
@@ -51,7 +58,16 @@ public class MapManager : MonoBehaviour
             }
         }
 
-        Tiles = _squareGrid.GenerateGrid();
+        foreach (var pos in tilemap.cellBounds.allPositionsWithin)
+        {
+            Vector3Int location = new Vector3Int(pos.x, pos.y, 0);
+            if (tilemap.HasTile(location))
+            {
+                tilemap.SetTileFlags(location, TileFlags.None);
+            }
+        }
+
+        Nodes = _squareGrid.GenerateGrid();
     }
 
 
@@ -223,7 +239,19 @@ public class MapManager : MonoBehaviour
     }
 
     //Metodo que devuelve el nodo del grid en base a la posicion en el mapa
-    public NodeBase GetTileAtPosition(Vector3Int pos) => Tiles.TryGetValue(pos, out var tile) ? tile : null;
+    public NodeBase GetTileAtPosition(Vector3Int pos) => Nodes.TryGetValue(pos, out var tile) ? tile : null;
+
+    //Metodo que cambia el color de los tiles con una posicion base y una lista de direcciones
+    public void ChangeTileColor(Vector3Int tileBase, Vector3Int[] positions, Color color) 
+    {
+        tilemap.SetColor(tileBase, color);
+
+        foreach (var pos in positions)
+        {
+            //Si hay un tile y es caminable (que no transitable)
+            tilemap.SetColor(tileBase + pos, color);
+        }
+    }
 
     //Metodo que devuelve la posicion del jugador
     public Vector3Int GetPlayerCoords() 

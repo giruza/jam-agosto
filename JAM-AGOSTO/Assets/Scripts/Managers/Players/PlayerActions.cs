@@ -81,7 +81,7 @@ public class PlayerActions : Damager
         coords += direction;
         transform.position = mapManager.cellToLocal(coords);
         mapManager.AddOccupiedTile(coords);
-        Debug.Log("Movimiento a: " + coords);
+        //Debug.Log("Movimiento a: " + coords);
         yield return new WaitForSeconds(0.1f);
         actionManager.playerDone();
     }

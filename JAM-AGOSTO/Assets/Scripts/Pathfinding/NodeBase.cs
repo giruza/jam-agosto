@@ -47,6 +47,8 @@ public class NodeBase : MonoBehaviour
 
     public void SetColor(Color color) => _renderer.color = color;
 
+    public void SetTransparent() => _renderer.color = new Color(255,255,255,0);
+
     //Metodo para calcular la distancia hacia el siguiente nodo
     public float GetDistance(NodeBase otherNode) 
     {
