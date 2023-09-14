@@ -35,22 +35,22 @@ public class ActionManager : MonoBehaviour
 
     }
 
-    public bool IsPlayerTurn(){
-        if (turnStatus == 0){
+    public bool IsPlayerTurn()
+    {
+        /*if (turnStatus == 0){
             return true;
         } else{
             return false;
-        }
+        }*/
+        return GameManager.Instance.GameState == GameState.PlayerTurn;
     }
 
-    public bool IsEnemyTurn(){
-        if (turnStatus == 2){
-            return true;
-        } else{
-            return false;
-        }
+    public bool IsEnemyTurn()
+    {
+        return GameManager.Instance.GameState == GameState.EnemyTurn;
     }
 
+    /*
     public void playerStarting(){
         turnStatus = 1;
         changeColor(player, Color.green);
@@ -61,6 +61,7 @@ public class ActionManager : MonoBehaviour
         turnStatus = 2;
         changeColor(player, Color.white);
     }
+    */
 
     public void EnemiesStarting(){
         enemySpawner.Spawn();
