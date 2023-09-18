@@ -4,20 +4,28 @@ using UnityEngine;
 
 public class ActionManager : MonoBehaviour
 {
-    //public List<GameObject> enemyList = new List<GameObject>();
     public GameObject player;
-    public int turnStatus;
     private Spawner enemySpawner;
+
+    private void Awake()
+    {
+        GameManager.GameStateChanged += EnemyTurn;
+    }
 
     void Start()
     {
         enemySpawner = GameObject.Find("EnemySpawner").GetComponent<Spawner>();
-        turnStatus = 0;
     }
 
-    void Update()
+    private void OnDestroy()
     {
-        if (IsEnemyTurn()){
+        GameManager.GameStateChanged -= EnemyTurn;
+    }
+
+    private void EnemyTurn(GameState state) 
+    {
+        if(state == GameState.EnemyTurn) 
+        {
             StartCoroutine(EnemyActions());
         }
     }
@@ -35,40 +43,13 @@ public class ActionManager : MonoBehaviour
 
     }
 
-    public bool IsPlayerTurn(){
-        if (turnStatus == 0){
-            return true;
-        } else{
-            return false;
-        }
-    }
-
-    public bool IsEnemyTurn(){
-        if (turnStatus == 2){
-            return true;
-        } else{
-            return false;
-        }
-    }
-
-    public void playerStarting(){
-        turnStatus = 1;
-        changeColor(player, Color.green);
-        
-    }
-
-    public void playerDone(){
-        turnStatus = 2;
-        changeColor(player, Color.white);
-    }
-
     public void EnemiesStarting(){
         enemySpawner.Spawn();
-        turnStatus = 3;
     }
 
     public void EnemiesDone(){
-        turnStatus = 0;
+        //Cambiar al turno del jugador
+        GameManager.Instance.SetGameState(GameState.PlayerTurn);  
     }
 
     public void changeColor(GameObject objectColored, Color coloringColor){

@@ -23,32 +23,34 @@ public class PlayerActions : Damager
 
     void Update()
     {
-        if (actionManager.IsPlayerTurn() && (Input.inputString != "")) {
+        //if (actionManager.IsPlayerTurn() && (Input.inputString != "")) {
+        if (GameManager.Instance.IsPlayerTurn() && (Input.inputString != ""))
+        {
             //Actions();
             switch (Input.inputString.ToUpper()) {
                 case "A":
                     if (mapManager.isCellTransitable(coords + Vector3Int.left)) {
-                        actionManager.playerStarting();
+                        //actionManager.playerStarting();
                         StartCoroutine(move(Vector3Int.left));
                         flip("left");
                     }
                     break;
                 case "D":
                     if (mapManager.isCellTransitable(coords + Vector3Int.right)) {
-                        actionManager.playerStarting();
+                        //actionManager.playerStarting();
                         StartCoroutine(move(Vector3Int.right));
                         flip("right");
                     }
                     break;
                 case "W":
                     if (mapManager.isCellTransitable(coords + Vector3Int.up)) {
-                        actionManager.playerStarting();
+                        //actionManager.playerStarting();
                         StartCoroutine(move(Vector3Int.up));
                     }
                     break;
                 case "S":
                     if (mapManager.isCellTransitable(coords + Vector3Int.down)) {
-                        actionManager.playerStarting();
+                        //actionManager.playerStarting();
                         StartCoroutine(move(Vector3Int.down));
                     }
                     break;
@@ -58,16 +60,17 @@ public class PlayerActions : Damager
                 default:
                     break;
             }
-        } else if(actionManager.IsPlayerTurn() && Input.GetMouseButtonDown(0))
+        } else if(GameManager.Instance.IsPlayerTurn() && Input.GetMouseButtonDown(0))
         {
             var mousePos = mapManager.GetClickPositionCell();
             GameObject enemyInPosition = mapManager.GetEnemyInPosition(mousePos);
             if (enemyInPosition && mapManager.IsEnemyInRange(enemyInPosition, BasicAttackRange))
             {
-                actionManager.playerStarting();
+                //actionManager.playerStarting();
                 ApplyDamage(enemyInPosition.GetComponent<Health>(), DamageAmount);
                 Debug.Log(enemyInPosition.GetComponent<Health>().Current);
-                actionManager.playerDone();
+                //actionManager.playerDone();
+                GameManager.Instance.SetGameState(GameState.EnemyTurn);
             }
             else 
             {
@@ -83,7 +86,8 @@ public class PlayerActions : Damager
         mapManager.AddOccupiedTile(coords);
         //Debug.Log("Movimiento a: " + coords);
         yield return new WaitForSeconds(0.1f);
-        actionManager.playerDone();
+        //actionManager.playerDone();
+        GameManager.Instance.SetGameState(GameState.EnemyTurn);
     }
 
     public void flip(string direction){
