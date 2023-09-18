@@ -30,13 +30,11 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        UpdateGameState(GameState.Hub);
+        SetGameState(GameState.Hub);
     }
 
-    private void UpdateGameState(GameState state) 
+    private void UpdateGameState() 
     {
-        GameState = state;
-
         switch (GameState)
         {
             case GameState.Hub:
@@ -69,7 +67,7 @@ public class GameManager : MonoBehaviour
 
         _sceneName = "Escena Principal";
 
-        UpdateGameState(GameState.LoadingMap);
+        SetGameState(GameState.LoadingMap);
     }
 
     private async void LoadingMap()
@@ -80,7 +78,7 @@ public class GameManager : MonoBehaviour
 
         await Task.Delay(1000);
 
-        UpdateGameState(GameState.PlayerTurn);
+        SetGameState(GameState.PlayerTurn);
     }
 
     private void HandlePlayerTurn()
@@ -91,6 +89,22 @@ public class GameManager : MonoBehaviour
     private void HandleEnemyTurn()
     {
         Debug.Log("Turno de los enemigos");
+    }
+
+    public bool IsPlayerTurn()
+    {
+        return GameState == GameState.PlayerTurn;
+    }
+
+    public bool IsEnemyTurn()
+    {
+        return GameState == GameState.EnemyTurn;
+    }
+
+    public void SetGameState(GameState gameState) 
+    {
+        GameState = gameState;
+        UpdateGameState();
     }
 }
 

@@ -17,8 +17,6 @@ public class MapManager : MonoBehaviour
     public Dictionary<GameObject, Vector3Int> interactuables = new();
     public TileBase mouseTile; 
     public float percentageAlpha;
-    //public Vector3Int location;
-    //public TileBase clickedTile;
 
     public Camera mainCamera;
     public Camera followCamera;
@@ -36,15 +34,7 @@ public class MapManager : MonoBehaviour
             }
         }
 
-        if (Instance != null && Instance != this) 
-        {
-            Destroy(this);
-        }
-        else 
-        {
-            Instance = this;
-            DontDestroyOnLoad(this);
-        }
+        Instance = this;
     }
 
     void Start()
@@ -78,16 +68,6 @@ public class MapManager : MonoBehaviour
             mainCamera.enabled = !mainCamera.enabled;
             followCamera.enabled = !followCamera.enabled;
         }
-
-        
-
-        /*if (Input.GetMouseButtonDown(0))
-        {
-            Vector3 mp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            location = tilemap.WorldToCell(mp);
-            clickedTile = tilemap.GetTile(location);
-            Debug.Log("CellToWorld" + tilemap.CellToLocal(location));
-        }*/
     }
 
     public Vector3Int GetClickPositionCell()

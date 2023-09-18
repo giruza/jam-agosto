@@ -24,7 +24,7 @@ public class PlayerActions : Damager
     void Update()
     {
         //if (actionManager.IsPlayerTurn() && (Input.inputString != "")) {
-        if (GameManager.Instance.GameState == GameState.PlayerTurn && (Input.inputString != ""))
+        if (GameManager.Instance.IsPlayerTurn() && (Input.inputString != ""))
         {
             //Actions();
             switch (Input.inputString.ToUpper()) {
@@ -60,7 +60,7 @@ public class PlayerActions : Damager
                 default:
                     break;
             }
-        } else if(actionManager.IsPlayerTurn() && Input.GetMouseButtonDown(0))
+        } else if(GameManager.Instance.IsPlayerTurn() && Input.GetMouseButtonDown(0))
         {
             var mousePos = mapManager.GetClickPositionCell();
             GameObject enemyInPosition = mapManager.GetEnemyInPosition(mousePos);
@@ -70,6 +70,7 @@ public class PlayerActions : Damager
                 ApplyDamage(enemyInPosition.GetComponent<Health>(), DamageAmount);
                 Debug.Log(enemyInPosition.GetComponent<Health>().Current);
                 //actionManager.playerDone();
+                GameManager.Instance.SetGameState(GameState.EnemyTurn);
             }
             else 
             {
@@ -86,6 +87,7 @@ public class PlayerActions : Damager
         //Debug.Log("Movimiento a: " + coords);
         yield return new WaitForSeconds(0.1f);
         //actionManager.playerDone();
+        GameManager.Instance.SetGameState(GameState.EnemyTurn);
     }
 
     public void flip(string direction){
