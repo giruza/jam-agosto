@@ -8,16 +8,27 @@ using UnityEngine.Events;
 public class Health : Progresive, IDamageable, IHealable
 {
     [SerializeField] private UnityEvent OnDie;
+    [SerializeField] private UnityEvent OnHit;
+
+    public Animator animator;
 
     public void Damage(float amount)
     {
         Current -= amount;
+        OnHit?.Invoke();
 
         if (Current <= 0)
         {
             OnDie.Invoke();
         }
     }
+
+    public void DamageToPlayer()
+    {
+        animator.SetTrigger("TriggerAttacked");
+    }
+
+ 
 
     public void Heal(float amount)
     {

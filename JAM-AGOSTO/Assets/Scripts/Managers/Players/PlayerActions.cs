@@ -9,6 +9,7 @@ public class PlayerActions : Damager
     public Vector3Int coords;
     public MapManager mapManager;
     public ActionManager actionManager;
+    public Animator animator;
 
     private void Awake()
     {
@@ -23,8 +24,10 @@ public class PlayerActions : Damager
 
     void Update()
     {
+
         if (actionManager.IsPlayerTurn() && (Input.inputString != "")) {
             //Actions();
+            animator.SetBool("isAttacking", false);
             switch (Input.inputString.ToUpper()) {
                 case "A":
                     if (mapManager.isCellTransitable(coords + Vector3Int.left)) {
@@ -58,12 +61,14 @@ public class PlayerActions : Damager
                 default:
                     break;
             }
-        } else if(actionManager.IsPlayerTurn() && Input.GetMouseButtonDown(0))
+        } 
+        else if(actionManager.IsPlayerTurn() && Input.GetMouseButtonDown(0))
         {
             var mousePos = mapManager.GetClickPositionCell();
             GameObject enemyInPosition = mapManager.GetEnemyInPosition(mousePos);
             if (enemyInPosition && mapManager.IsEnemyInRange(enemyInPosition, BasicAttackRange))
             {
+                animator.SetTrigger("TriggerAttack");
                 actionManager.playerStarting();
                 ApplyDamage(enemyInPosition.GetComponent<Health>(), DamageAmount);
                 Debug.Log(enemyInPosition.GetComponent<Health>().Current);
@@ -71,6 +76,7 @@ public class PlayerActions : Damager
             }
             else 
             {
+                //animator.SetBool("isAttacking", false);
                 Debug.Log("No hay enemigos cerca");
             }
         }
